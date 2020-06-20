@@ -10,12 +10,18 @@ import UIKit
 
 class RegisterController: UIViewController {
 
+    // MARK: - Properties
     
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        configureUI()
     }
     
+    
+    // MARK: - UI
+    private func configureUI() {
+        
+    }
 }
