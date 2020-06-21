@@ -18,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let rootViewController = HomeController()
         let navigationRootViewController = UINavigationController(rootViewController: rootViewController)
+        navigationRootViewController.navigationBar.barTintColor = .white
+        navigationRootViewController.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        navigationRootViewController.navigationBar.shadowImage = UIImage()
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationRootViewController
