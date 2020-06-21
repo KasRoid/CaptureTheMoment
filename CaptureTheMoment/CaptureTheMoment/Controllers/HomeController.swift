@@ -53,6 +53,12 @@ class HomeController: UIViewController {
         configureAnimation()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.welcomeLabelBottomAnchorConstant.constant = -20
+        self.welcomeLabel.alpha = 0
+    }
+    
     
     // MARK: - UI
     private func configureUI() {
@@ -91,6 +97,17 @@ class HomeController: UIViewController {
             self.welcomeLabel.alpha = 1
             self.view.layoutIfNeeded()
         })
+        
+        UIView.animate(
+            withDuration: 1.0,
+            delay: 0,
+            options: [.autoreverse, .repeat, .allowUserInteraction],
+            animations: {
+                self.cameraBtn.transform = CGAffineTransform(scaleX: 1.03, y: 1.03)
+        },
+            completion: nil
+            
+        )
     }
     
     
@@ -101,7 +118,7 @@ class HomeController: UIViewController {
     }
     
     @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
-        print("Album bar button")
+        navigationController?.pushViewController(AlbumCollectionController(), animated: true)
     }
 }
 

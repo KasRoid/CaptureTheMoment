@@ -22,6 +22,6 @@ class AlbumCollectionController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
-        
+        view.backgroundColor = .white
     }
 }
