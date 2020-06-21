@@ -23,11 +23,27 @@ class HomeController: UIViewController {
         return barButton
     }()
     
+    private lazy var welcomeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "터치하여 일상기록"
+        label.textColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.alpha = 0
+        return label
+    }()
+    
+    private var welcomeLabelBottomAnchorConstant: NSLayoutConstraint!
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureAnimation()
     }
     
     
@@ -45,8 +61,10 @@ class HomeController: UIViewController {
         
         navigationItem.rightBarButtonItems = [albumBtn]
         
+        welcomeLabelBottomAnchorConstant = welcomeLabel.bottomAnchor.constraint(equalTo: cameraBtn.topAnchor, constant: -20)
+        
         // AutoLayout
-        [cameraBtn].forEach() {
+        [cameraBtn, welcomeLabel].forEach() {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false }
         [
@@ -54,7 +72,18 @@ class HomeController: UIViewController {
             cameraBtn.heightAnchor.constraint(equalToConstant: view.bounds.width / 1.5),
             cameraBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             cameraBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+            
+            welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            welcomeLabelBottomAnchorConstant,
             ].forEach { $0.isActive = true }
+    }
+    
+    private func configureAnimation() {
+        UIView.animate(withDuration: 1, animations: {
+            self.welcomeLabelBottomAnchorConstant.constant = -50
+            self.welcomeLabel.alpha = 1
+            self.view.layoutIfNeeded()
+        })
     }
     
     
