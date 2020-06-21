@@ -27,6 +27,7 @@ class CircleButton: UIButton {
     
     // MARK: - UI
     private func configureUI() {
+        // Colors
         backgroundColor = #colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 1)
         tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -36,10 +37,12 @@ class CircleButton: UIButton {
         layer.masksToBounds = false
         layer.cornerRadius = 4.0
         
+        // Add an icon
         imageView?.image = btnIcon
         imageView?.contentMode = .scaleAspectFill
         setImage(btnIcon, for: .normal)
         
+        // AutoLayout
         addSubview(imageView!)
         imageView?.translatesAutoresizingMaskIntoConstraints = false
         [

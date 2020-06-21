@@ -11,11 +11,16 @@ import UIKit
 class HomeController: UIViewController {
     
     // MARK: - Properties
-    lazy var cameraBtn: CircleButton = {
+    private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
         button.layer.cornerRadius = view.bounds.width / 3
         button.addTarget(self, action: #selector(handleCameraBtn(_:)), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var albumBtn: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: UIImage(systemName: "rectangle.stack")?.withTintColor(#colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 1), renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(handleAlbumBarBtn(_:)))
+        return barButton
     }()
     
     
@@ -28,6 +33,8 @@ class HomeController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
+        
+        // Gradient
         let gradient = CAGradientLayer()
         let upperColor: CGColor = #colorLiteral(red: 0.767367435, green: 0.7234390481, blue: 1, alpha: 1)
         let lowerColor: CGColor = #colorLiteral(red: 0.5145841203, green: 0.403913625, blue: 1, alpha: 1)
@@ -36,6 +43,9 @@ class HomeController: UIViewController {
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
+        navigationItem.rightBarButtonItems = [albumBtn]
+        
+        // AutoLayout
         [cameraBtn].forEach() {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -51,6 +61,10 @@ class HomeController: UIViewController {
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
         print("Button Clicked")
+    }
+    
+    @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
+        print("Album bar button")
     }
 }
 
