@@ -34,6 +34,13 @@ class HomeController: UIViewController {
     
     private var welcomeLabelBottomAnchorConstant: NSLayoutConstraint!
     
+    private lazy var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
+        return imagePicker
+    }()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -89,7 +96,8 @@ class HomeController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
-        print("Button Clicked")
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        present(imagePicker, animated: true)
     }
     
     @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
@@ -97,3 +105,14 @@ class HomeController: UIViewController {
     }
 }
 
+
+// MARK: - UIImagePickerControllerDelegate
+extension HomeController: UIImagePickerControllerDelegate {
+    
+}
+
+
+// MARK: - UINavigationControllerDelegate
+extension HomeController: UINavigationControllerDelegate {
+    
+}
