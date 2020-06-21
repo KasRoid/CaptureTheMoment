@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeController: UIViewController {
+final class HomeController: UIViewController {
     
     // MARK: - Properties
     private lazy var cameraBtn: CircleButton = {
