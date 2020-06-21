@@ -28,6 +28,14 @@ class HomeController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
+        let gradient = CAGradientLayer()
+        let upperColor: CGColor = #colorLiteral(red: 0.767367435, green: 0.7234390481, blue: 1, alpha: 1)
+        let lowerColor: CGColor = #colorLiteral(red: 0.5145841203, green: 0.403913625, blue: 1, alpha: 1)
+        gradient.colors = [upperColor, lowerColor]
+        gradient.locations = [0 ,1]
+        view.layer.addSublayer(gradient)
+        gradient.frame = view.frame
+        
         [cameraBtn].forEach() {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false }
