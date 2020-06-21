@@ -63,7 +63,6 @@ class HomeController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
-        
         // Gradient
         let gradient = CAGradientLayer()
         let upperColor: CGColor = #colorLiteral(red: 0.767367435, green: 0.7234390481, blue: 1, alpha: 1)
@@ -93,7 +92,7 @@ class HomeController: UIViewController {
     }
     
     private func configureAnimation() {
-        UIView.animate(
+        UIView.animate( // label 등장 애니메이션
             withDuration: 1,
             animations: {
                 self.welcomeLabelBottomAnchorConstant.constant = -50
@@ -101,7 +100,7 @@ class HomeController: UIViewController {
                 self.view.layoutIfNeeded()
         })
         
-        UIView.animate(
+        UIView.animate( // cameraBtn 숨 쉬는 애니메이션
             withDuration: 1.0,
             delay: 0,
             options: [.autoreverse, .repeat, .allowUserInteraction],
