@@ -34,6 +34,13 @@ class HomeController: UIViewController {
     
     private var welcomeLabelBottomAnchorConstant: NSLayoutConstraint!
     
+    private lazy var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
+        return imagePicker
+    }()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -46,10 +53,16 @@ class HomeController: UIViewController {
         configureAnimation()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        welcomeLabelBottomAnchorConstant.constant = -20
+        welcomeLabel.alpha = 0
+        cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
+    }
+    
     
     // MARK: - UI
     private func configureUI() {
-        
         // Gradient
         let gradient = CAGradientLayer()
         let upperColor: CGColor = #colorLiteral(red: 0.767367435, green: 0.7234390481, blue: 1, alpha: 1)
@@ -79,21 +92,46 @@ class HomeController: UIViewController {
     }
     
     private func configureAnimation() {
-        UIView.animate(withDuration: 1, animations: {
-            self.welcomeLabelBottomAnchorConstant.constant = -50
-            self.welcomeLabel.alpha = 1
-            self.view.layoutIfNeeded()
+        UIView.animate( // label 등장 애니메이션
+            withDuration: 1,
+            animations: {
+                self.welcomeLabelBottomAnchorConstant.constant = -50
+                self.welcomeLabel.alpha = 1
+                self.view.layoutIfNeeded()
         })
+        
+        UIView.animate( // cameraBtn 숨 쉬는 애니메이션
+            withDuration: 1.0,
+            delay: 0,
+            options: [.autoreverse, .repeat, .allowUserInteraction],
+            animations: {
+                self.cameraBtn.transform = CGAffineTransform(scaleX: 1.03, y: 1.03)
+        },
+            completion: nil
+            
+        )
     }
     
     
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
-        print("Button Clicked")
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        present(imagePicker, animated: true)
     }
     
     @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
-        print("Album bar button")
+        navigationController?.pushViewController(AlbumCollectionController(), animated: true)
     }
 }
 
+
+// MARK: - UIImagePickerControllerDelegate
+extension HomeController: UIImagePickerControllerDelegate {
+    
+}
+
+
+// MARK: - UINavigationControllerDelegate
+extension HomeController: UINavigationControllerDelegate {
+    
+}
