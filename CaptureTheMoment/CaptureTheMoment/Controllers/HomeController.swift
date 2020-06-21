@@ -55,8 +55,9 @@ class HomeController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.welcomeLabelBottomAnchorConstant.constant = -20
-        self.welcomeLabel.alpha = 0
+        welcomeLabelBottomAnchorConstant.constant = -20
+        welcomeLabel.alpha = 0
+        cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
     }
     
     
@@ -92,10 +93,12 @@ class HomeController: UIViewController {
     }
     
     private func configureAnimation() {
-        UIView.animate(withDuration: 1, animations: {
-            self.welcomeLabelBottomAnchorConstant.constant = -50
-            self.welcomeLabel.alpha = 1
-            self.view.layoutIfNeeded()
+        UIView.animate(
+            withDuration: 1,
+            animations: {
+                self.welcomeLabelBottomAnchorConstant.constant = -50
+                self.welcomeLabel.alpha = 1
+                self.view.layoutIfNeeded()
         })
         
         UIView.animate(
