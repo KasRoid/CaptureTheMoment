@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeController: UIViewController {
+final class HomeController: UIViewController {
     
     // MARK: - Properties
     private lazy var cameraBtn: CircleButton = {
@@ -27,7 +27,7 @@ class HomeController: UIViewController {
         let label = UILabel()
         label.text = "터치하여 일상기록"
         label.textColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 27)
         label.alpha = 0
         return label
     }()
@@ -72,11 +72,14 @@ class HomeController: UIViewController {
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
+        // NavigationController Settings
+        navigationItem.title = "Capture the Moment"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
         navigationItem.rightBarButtonItems = [albumBtn]
         
+        // AutoLayout
         welcomeLabelBottomAnchorConstant = welcomeLabel.bottomAnchor.constraint(equalTo: cameraBtn.topAnchor, constant: -20)
         
-        // AutoLayout
         [cameraBtn, welcomeLabel].forEach() {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false }
