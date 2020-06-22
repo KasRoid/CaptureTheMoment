@@ -50,7 +50,11 @@ final class AlbumCollectionController: UIViewController {
     // MARK: - UI
     private func configureUI() {
         view.backgroundColor = .white
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = #colorLiteral(red: 0.8518349528, green: 0.835316956, blue: 0.9923551679, alpha: 1)
+        
+        navigationItem.title = "Album"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)
         
         view.addSubview(collectionView)
     }
@@ -73,5 +77,10 @@ extension AlbumCollectionController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension AlbumCollectionController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let DetailVC = DetailViewController()
+        let naviDetailVC = UINavigationController(rootViewController: DetailVC)
+        naviDetailVC.modalPresentationStyle = .overFullScreen
+        present(naviDetailVC, animated: true, completion: nil)
+    }
 }
