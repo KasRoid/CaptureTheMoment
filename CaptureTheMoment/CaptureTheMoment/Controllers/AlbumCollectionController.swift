@@ -11,6 +11,8 @@ import UIKit
 final class AlbumCollectionController: UIViewController {
 
     // MARK: - Properties
+    let cellItem = colorItems()
+    
     lazy private var collectionView = { () -> UICollectionView in
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: self.flowLayout)
         collectionView.register(AlbumCollectionCell.self, forCellWithReuseIdentifier: AlbumCollectionCell.identifier)
@@ -26,9 +28,9 @@ final class AlbumCollectionController: UIViewController {
         let spaceBetweenEachItem: CGFloat = 8
         let edge: CGFloat = 8
         
-        let spaceNeededInHorizontalLine = (spaceBetweenEachItem * (numberOfItemsInEachLine - 1) + edge * 2) / 2
-        let width = view.bounds.width / numberOfItemsInEachLine - spaceBetweenEachItem
-        let height = width * 1.5
+        let spaceNeededInHorizontalLine = ((spaceBetweenEachItem * (numberOfItemsInEachLine - 1) + edge * 2)) / 2
+        let width = (view.bounds.width / numberOfItemsInEachLine - spaceBetweenEachItem) * 0.97
+        let height = width * 1.3
         
         layout.itemSize = CGSize(width: width, height: height)
         layout.minimumLineSpacing = spaceBetweenEachItem
@@ -58,11 +60,12 @@ final class AlbumCollectionController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension AlbumCollectionController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return cellItem.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCollectionCell.identifier, for: indexPath)
+        cell.backgroundColor = cellItem.items[indexPath.item].color
         return cell
     }
 }
