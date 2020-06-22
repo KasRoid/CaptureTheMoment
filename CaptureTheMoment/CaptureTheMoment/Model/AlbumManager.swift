@@ -9,8 +9,8 @@
 import UIKit
 
 struct AlbumManager {
-    var image: UIImage?
-    var imageName: String?
+    var image: Data?
+    var comment: String?
     var imageTag: String?
 }
 
@@ -23,7 +23,5 @@ struct Colors {
 }
 
 struct colorItems {
-    var items = Array(1...25).compactMap() {
-        _ in Colors()
-    }
+    var items = Array(1...25).compactMap() { _ in Colors() }
 }
