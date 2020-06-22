@@ -34,8 +34,9 @@ final class DetailViewController: UIViewController {
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = "여기에 이런식으로 사용자가 작성한 코멘트가 불러와 보여집니다"
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .white
+        label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
         label.backgroundColor = .clear
@@ -66,6 +67,8 @@ final class DetailViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
+        navigationItem.title = "Memory"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)
         
         navigationItem.leftBarButtonItems = [returnBtn]
@@ -73,10 +76,10 @@ final class DetailViewController: UIViewController {
         
         // Gradient
         let gradient = CAGradientLayer()
-        let upperColor: CGColor = #colorLiteral(red: 0.6461008787, green: 0.594007194, blue: 1, alpha: 1)
+        let upperColor: CGColor = #colorLiteral(red: 0.8518349528, green: 0.835316956, blue: 0.9923551679, alpha: 1)
         let lowerColor: CGColor = #colorLiteral(red: 0.443330735, green: 0.3350912333, blue: 1, alpha: 1)
         gradient.colors = [upperColor, lowerColor]
-        gradient.locations = [0 ,1]
+        gradient.locations = [0 ,0.85]
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
@@ -100,7 +103,7 @@ final class DetailViewController: UIViewController {
             commentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing / 3),
             commentLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
-            commentLabel.heightAnchor.constraint(equalToConstant: 30),
+            commentLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             ].forEach { $0.isActive = true }
     }
     
