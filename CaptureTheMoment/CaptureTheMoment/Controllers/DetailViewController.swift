@@ -23,7 +23,7 @@ final class DetailViewController: UIViewController {
     private lazy var commentTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Comment"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -34,7 +34,7 @@ final class DetailViewController: UIViewController {
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = "여기에 이런식으로 사용자가 작성한 코멘트가 불러와 보여집니다"
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -62,8 +62,7 @@ final class DetailViewController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
-        view.backgroundColor = .black
-        view.alpha = 0.9
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -71,6 +70,15 @@ final class DetailViewController: UIViewController {
         
         navigationItem.leftBarButtonItems = [returnBtn]
         navigationItem.rightBarButtonItems = [editBtn]
+        
+        // Gradient
+        let gradient = CAGradientLayer()
+        let upperColor: CGColor = #colorLiteral(red: 0.6461008787, green: 0.594007194, blue: 1, alpha: 1)
+        let lowerColor: CGColor = #colorLiteral(red: 0.443330735, green: 0.3350912333, blue: 1, alpha: 1)
+        gradient.colors = [upperColor, lowerColor]
+        gradient.locations = [0 ,1]
+        view.layer.addSublayer(gradient)
+        gradient.frame = view.frame
         
         [imageViewer, commentTitleLabel, commentLabel].forEach {
             view.addSubview($0)
@@ -81,8 +89,8 @@ final class DetailViewController: UIViewController {
         [
             imageViewer.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             imageViewer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: spacing),
-            imageViewer.widthAnchor.constraint(equalToConstant: view.bounds.width - spacing * 2),
-            imageViewer.heightAnchor.constraint(equalToConstant: view.bounds.height * 3 / 5),
+            imageViewer.widthAnchor.constraint(equalToConstant: view.bounds.width - spacing * 3.5),
+            imageViewer.heightAnchor.constraint(equalToConstant: view.bounds.height * 3 / 7),
             
             commentTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentTitleLabel.topAnchor.constraint(equalTo: imageViewer.bottomAnchor, constant: spacing * 2),
