@@ -20,6 +20,7 @@
 		42A2E085249FBDFA00439A62 /* AlbumCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E084249FBDF900439A62 /* AlbumCollectionHeader.swift */; };
 		42A2E087249FBF2000439A62 /* AlbumCollectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E086249FBF2000439A62 /* AlbumCollectionFooter.swift */; };
 		42A2E08924A0210800439A62 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E08824A0210800439A62 /* DetailImageView.swift */; };
+		42A2E08B24A03AA800439A62 /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E08A24A03AA800439A62 /* AlbumManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		42A2E084249FBDF900439A62 /* AlbumCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionHeader.swift; sourceTree = "<group>"; };
 		42A2E086249FBF2000439A62 /* AlbumCollectionFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionFooter.swift; sourceTree = "<group>"; };
 		42A2E08824A0210800439A62 /* DetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageView.swift; sourceTree = "<group>"; };
+		42A2E08A24A03AA800439A62 /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		426BDDDA249DD0CC00AE6D25 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				42A2E08A24A03AA800439A62 /* AlbumManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				426BDDC9249DCFB200AE6D25 /* HomeController.swift in Sources */,
 				426BDDC5249DCFB200AE6D25 /* AppDelegate.swift in Sources */,
 				420DA5CE249DD28F00843B56 /* RegisterController.swift in Sources */,
+				42A2E08B24A03AA800439A62 /* AlbumManager.swift in Sources */,
 				42A2E08924A0210800439A62 /* DetailImageView.swift in Sources */,
 				42A2E085249FBDFA00439A62 /* AlbumCollectionHeader.swift in Sources */,
 				420DA5CC249DD23E00843B56 /* DetailViewController.swift in Sources */,
