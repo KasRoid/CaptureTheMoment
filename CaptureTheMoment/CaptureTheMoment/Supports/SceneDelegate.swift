@@ -51,6 +51,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
+        if let rootVC = window?.rootViewController, let homeVC = rootVC as? HomeController {
+            print("enter")
+                homeVC.configureAnimation()
+        }
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.

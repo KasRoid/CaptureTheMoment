@@ -56,19 +56,23 @@ final class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNotification()
         configureUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureAnimation()
+        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        welcomeLabelBottomAnchorConstant.constant = -20
-        welcomeLabel.alpha = 0
-        cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
+        resetAnimation()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     
@@ -105,7 +109,7 @@ final class HomeController: UIViewController {
             ].forEach { $0.isActive = true }
     }
     
-    private func configureAnimation() {
+    func configureAnimation() {
         UIView.animate( // label 등장 애니메이션
             withDuration: 1,
             animations: {
@@ -126,6 +130,18 @@ final class HomeController: UIViewController {
         )
     }
     
+    func resetAnimation() {
+        welcomeLabelBottomAnchorConstant.constant = -20
+        welcomeLabel.alpha = 0
+        cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
+    }
+    
+    func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWillEnterForegroundNotification), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    
     
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
@@ -135,6 +151,14 @@ final class HomeController: UIViewController {
     
     @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
         navigationController?.pushViewController(AlbumCollectionController(), animated: true)
+    }
+
+    @objc func handleDidEnterBackgroundNotification() {
+        resetAnimation()
+    }
+    
+    @objc func handleWillEnterForegroundNotification() {
+        configureAnimation()
     }
 }
 
