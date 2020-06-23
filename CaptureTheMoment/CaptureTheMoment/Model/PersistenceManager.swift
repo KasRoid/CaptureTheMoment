@@ -14,6 +14,8 @@ final class PersistenceManager {
     private init(){}
     static let shared = PersistenceManager()
     
+    var photo = [Photo]()
+    
     // MARK: - Core Data Stack
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataManager")
@@ -44,10 +46,10 @@ final class PersistenceManager {
     
     
     // MARK: - Methods
-    func saveData(imageView: UIImageView, textField: UITextField) {
-        let photo = Photo(context: self.context)
-        photo.image = imageView.image?.pngData()
-        photo.comment = textField.text
+    
+    func delete(_ object: NSManagedObject) {
+        context.delete(object)
+        save()
     }
     
     func fetch<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
@@ -64,9 +66,36 @@ final class PersistenceManager {
         }
     }
     
+    func saveData(imageView: UIImageView, textField: UITextField) {
+        let photo = Photo(context: self.context)
+        photo.image = imageView.image?.pngData()
+        photo.comment = textField.text
+    }
+    
     func loadPhotoData() {
 //        guard let photo = try! self.context.fetch(Photo.fetchRequest()) as? [Photo] else { return }
         let photo = self.fetch(Photo.self)
+        self.photo = photo
+        printData()
+        
+        let deadline = DispatchTime.now() + .seconds(5)
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: updateData)
+    }
+    
+    func updateData() {
+        let firstPhoto = photo.first!
+        firstPhoto.comment! += ""
+        self.save()
+    }
+    
+    func deleteData() {
+        let firstPhoto = photo.first!
+        self.context.delete(firstPhoto)
+        self.save()
+    }
+    
+    func printData() {
         photo.forEach() { print($0.comment ?? "")}
     }
 }
+
