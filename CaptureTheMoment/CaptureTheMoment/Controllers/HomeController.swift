@@ -21,14 +21,14 @@ final class HomeController: UIViewController {
     }()
     
     private lazy var albumBtn: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: UIImage(systemName: "rectangle.stack")?.withTintColor(#colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 1), renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(handleAlbumBarBtn(_:)))
+        let barButton = UIBarButtonItem(image: UIImage(systemName: "rectangle.stack")?.withTintColor(#colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1), renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(handleAlbumBarBtn(_:)))
         return barButton
     }()
     
     private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "터치하여 일상기록"
-        label.textColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 27)
         label.alpha = 0
         return label
@@ -76,8 +76,8 @@ final class HomeController: UIViewController {
     private func configureUI() {
         // Gradient
         let gradient = CAGradientLayer()
-        let upperColor: CGColor = #colorLiteral(red: 0.767367435, green: 0.7234390481, blue: 1, alpha: 1)
-        let lowerColor: CGColor = #colorLiteral(red: 0.5145841203, green: 0.403913625, blue: 1, alpha: 1)
+        let upperColor: CGColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
+        let lowerColor: CGColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         gradient.colors = [upperColor, lowerColor]
         gradient.locations = [0 ,1]
         view.layer.addSublayer(gradient)
@@ -85,7 +85,7 @@ final class HomeController: UIViewController {
         
         // NavigationController Settings
         navigationItem.title = "Capture the Moment"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)]
         navigationItem.rightBarButtonItems = [albumBtn]
         
         // AutoLayout

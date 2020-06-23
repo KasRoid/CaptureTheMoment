@@ -24,7 +24,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.text = "Comment"
         label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = .white
+        label.textColor = #colorLiteral(red: 0.862745098, green: 0.8392156863, blue: 0.968627451, alpha: 1)
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
         label.backgroundColor = .clear
@@ -35,7 +35,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.text = "여기에 이런식으로 사용자가 작성한 코멘트가 불러와 보여집니다"
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .white
+        label.textColor = #colorLiteral(red: 0.9568627451, green: 0.9333333333, blue: 1, alpha: 1)
         label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -68,18 +68,18 @@ final class DetailViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.title = "Memory"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)]
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         
         navigationItem.leftBarButtonItems = [returnBtn]
         navigationItem.rightBarButtonItems = [editBtn]
         
         // Gradient
         let gradient = CAGradientLayer()
-        let upperColor: CGColor = #colorLiteral(red: 0.8518349528, green: 0.835316956, blue: 0.9923551679, alpha: 1)
-        let lowerColor: CGColor = #colorLiteral(red: 0.443330735, green: 0.3350912333, blue: 1, alpha: 1)
+        let upperColor: CGColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
+        let lowerColor: CGColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         gradient.colors = [upperColor, lowerColor]
-        gradient.locations = [0 ,0.85]
+        gradient.locations = [0 ,0.70]
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         

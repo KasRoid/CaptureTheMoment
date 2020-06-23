@@ -50,11 +50,11 @@ final class AlbumCollectionController: UIViewController {
     // MARK: - UI
     private func configureUI() {
         view.backgroundColor = .white
-        collectionView.backgroundColor = #colorLiteral(red: 0.8518349528, green: 0.835316956, blue: 0.9923551679, alpha: 1)
+        collectionView.backgroundColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
         
         navigationItem.title = "Album"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)]
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.5956794024, green: 0.2148896754, blue: 1, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)]
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         
         view.addSubview(collectionView)
     }
