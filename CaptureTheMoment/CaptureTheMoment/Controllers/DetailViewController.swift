@@ -44,12 +44,12 @@ final class DetailViewController: UIViewController {
     }()
     
     private lazy var editBtn: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "exclamationmark.square"), style: .plain, target: self, action: #selector(handleEditBtn(_:)))
+        let button = UIBarButtonItem(image: UIImage(systemName: "pencil.tip"), style: .plain, target: self, action: #selector(handleEditBtn(_:)))
         return button
     }()
     
     private lazy var returnBtn: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.down"), style: .plain, target: self, action: #selector(handleReturnBtn(_:)))
+        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.down.right.and.arrow.up.left"), style: .plain, target: self, action: #selector(handleReturnBtn(_:)))
         return button
     }()
     

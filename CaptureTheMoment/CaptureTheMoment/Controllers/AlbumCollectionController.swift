@@ -53,6 +53,12 @@ final class AlbumCollectionController: UIViewController {
         return layout
     }()
     
+    lazy private var backBtn: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.down"), style: .plain, target: self, action: #selector(handleBackBtn(_:)))
+        barButton.tintColor = .white
+        return barButton
+    }()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -76,6 +82,7 @@ final class AlbumCollectionController: UIViewController {
         navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
         navigationController?.navigationBar.barStyle = .black
         
+        navigationItem.leftBarButtonItems = [backBtn]
         
         view.addSubview(collectionView)
         
@@ -104,21 +111,10 @@ final class AlbumCollectionController: UIViewController {
         }
     }
     
-    func addBlurEffect() {
-        var bounds = self.navigationController?.navigationBar.bounds ?? CGRect.zero
-        bounds.size.height += 50
-        bounds.origin.y -= 50
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        visualEffectView.frame = bounds
-        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.navigationController?.navigationBar.addSubview(visualEffectView)
-        self.navigationController?.navigationBar.sendSubviewToBack(visualEffectView)
-    }
-    
     
     // MARK: - Selectors
     @objc private func handleBackBtn(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -165,6 +161,7 @@ extension AlbumCollectionController: UICollectionViewDelegate {
         let DetailVC = DetailViewController()
         let naviDetailVC = UINavigationController(rootViewController: DetailVC)
         naviDetailVC.modalPresentationStyle = .overFullScreen
+        naviDetailVC.modalTransitionStyle = .crossDissolve
         present(naviDetailVC, animated: true, completion: nil)
     }
 }

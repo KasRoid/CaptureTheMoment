@@ -60,10 +60,14 @@ final class HomeController: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.backgroundColor = .clear
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureAnimation()
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -150,8 +154,15 @@ final class HomeController: UIViewController {
     }
     
     @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
-        navigationController?.pushViewController(AlbumCollectionController(), animated: true)
+        let nextVC = UINavigationController(rootViewController: AlbumCollectionController())
+        nextVC.modalPresentationStyle = .fullScreen
+        nextVC.modalTransitionStyle = .coverVertical
+        present(nextVC, animated: true)
     }
+    
+//    @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
+//        navigationController?.pushViewController(AlbumCollectionController(), animated: true)
+//    }
 
     @objc func handleDidEnterBackgroundNotification() {
         resetAnimation()
