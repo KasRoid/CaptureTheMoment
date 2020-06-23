@@ -131,6 +131,36 @@ final class HomeController: UIViewController {
 // MARK: - UIImagePickerControllerDelegate
 extension HomeController: UIImagePickerControllerDelegate {
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let originalImage = info[.originalImage] as! UIImage
+        let editedImage = info[.editedImage] as? UIImage
+        let selectedImage = editedImage ?? originalImage
+        
+//        if picker.sourceType == .camera {
+//            UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
+//        }
+        
+        let rc = RegisterController()
+        rc.imageFromPicker = selectedImage
+        
+        picker.dismiss(animated: true)
+        #if true
+        // push
+        navigationController?.modalTransitionStyle = .coverVertical
+        navigationController?.pushViewController(rc, animated: true)
+        #else
+        // present
+        rc.modalPresentationStyle = .overFullScreen
+        present(rc, animated: true)
+        #endif
+        
+
+    }
+    
 }
 
 
