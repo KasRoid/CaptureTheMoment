@@ -63,6 +63,7 @@ final class HomeController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureAnimation()
+        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

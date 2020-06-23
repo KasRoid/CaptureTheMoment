@@ -9,9 +9,9 @@
 import UIKit
 
 struct AlbumManager {
-    var image: Data?
-    var comment: String?
-    var imageTag: String?
+    var image: [Data?]
+    var comment: [String?]
+    var imageTag: [String?]
 }
 
 

@@ -27,6 +27,6 @@ class AlbumCollectionFooter: UICollectionReusableView {
     
     // MARK: - UI
     private func configureUI() {
-        
+        backgroundColor = .black
     }
 }
