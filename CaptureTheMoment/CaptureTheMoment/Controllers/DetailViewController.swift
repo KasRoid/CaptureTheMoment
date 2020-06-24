@@ -31,7 +31,7 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    private lazy var commentLabel: UILabel = {
+    lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = "여기에 이런식으로 사용자가 작성한 코멘트가 불러와 보여집니다"
         label.font = UIFont.systemFont(ofSize: 18)
@@ -59,6 +59,7 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
+    
     
     
     // MARK: - UI
@@ -90,16 +91,19 @@ final class DetailViewController: UIViewController {
         
         let spacing: CGFloat = 16
         [
+            // imageViewer Layout
             imageViewer.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             imageViewer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: spacing),
             imageViewer.widthAnchor.constraint(equalToConstant: view.bounds.width - spacing * 3.5),
             imageViewer.heightAnchor.constraint(equalToConstant: view.bounds.height * 3 / 7),
             
+            // commentTitleLabel Layout
             commentTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentTitleLabel.topAnchor.constraint(equalTo: imageViewer.bottomAnchor, constant: spacing * 2),
             commentTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
+            // commentLabel Layout
             commentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing / 3),
             commentLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
@@ -109,7 +113,8 @@ final class DetailViewController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleEditBtn(_ sender: UIBarButtonItem) {
-        
+        let nextVC = UINavigationController(rootViewController: EditingViewController())
+        present(nextVC, animated: true, completion: nil)
     }
     
     @objc private func handleReturnBtn(_ sender: UIBarButtonItem) {

@@ -160,10 +160,6 @@ final class HomeController: UIViewController {
         present(nextVC, animated: true)
     }
     
-//    @objc private func handleAlbumBarBtn(_ sender: UIBarButtonItem) {
-//        navigationController?.pushViewController(AlbumCollectionController(), animated: true)
-//    }
-
     @objc func handleDidEnterBackgroundNotification() {
         resetAnimation()
     }

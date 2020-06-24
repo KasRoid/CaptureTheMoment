@@ -58,7 +58,7 @@ final class AlbumCollectionController: UIViewController {
         barButton.tintColor = .white
         return barButton
     }()
-    
+        
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -115,6 +115,10 @@ final class AlbumCollectionController: UIViewController {
     // MARK: - Selectors
     @objc private func handleBackBtn(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func handleDeleteBtn(_ sender: UIBarButtonItem) {
+        
     }
 }
 

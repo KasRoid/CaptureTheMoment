@@ -25,6 +25,7 @@
 		42A2E09424A0AE8800439A62 /* Photo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E09224A0AE8800439A62 /* Photo+CoreDataClass.swift */; };
 		42A2E09524A0AE8800439A62 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E09324A0AE8800439A62 /* Photo+CoreDataProperties.swift */; };
 		42A2E09724A0EA8800439A62 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E09624A0EA8800439A62 /* PersistenceManager.swift */; };
+		42F4550124A2C3EF00E6245C /* EditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4550024A2C3EF00E6245C /* EditingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		42A2E09224A0AE8800439A62 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		42A2E09324A0AE8800439A62 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		42A2E09624A0EA8800439A62 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		42F4550024A2C3EF00E6245C /* EditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				426BDDC8249DCFB200AE6D25 /* HomeController.swift */,
 				420DA5C9249DD1ED00843B56 /* AlbumCollectionController.swift */,
 				420DA5CB249DD23E00843B56 /* DetailViewController.swift */,
+				42F4550024A2C3EF00E6245C /* EditingViewController.swift */,
 				420DA5CD249DD28F00843B56 /* RegisterController.swift */,
 			);
 			path = Controllers;
@@ -236,6 +239,7 @@
 				426BDDC7249DCFB200AE6D25 /* SceneDelegate.swift in Sources */,
 				42A2E087249FBF2000439A62 /* AlbumCollectionFooter.swift in Sources */,
 				42A2E09524A0AE8800439A62 /* Photo+CoreDataProperties.swift in Sources */,
+				42F4550124A2C3EF00E6245C /* EditingViewController.swift in Sources */,
 				420DA5CA249DD1ED00843B56 /* AlbumCollectionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
