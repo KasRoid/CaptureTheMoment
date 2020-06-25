@@ -12,9 +12,9 @@ final class HomeController: UIViewController {
     
     // MARK: - Properties
     let persistenceManager: PersistenceManager
-    
     static var currentTheme: ColorTheme = .night
     var timer = Timer()
+
     
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
@@ -43,8 +43,7 @@ final class HomeController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .camera
-//        imagePicker.allowsEditing = true
-//        imagePicker.
+        imagePicker.allowsEditing = true
         imagePicker.cameraFlashMode = .off
         return imagePicker
     }()
@@ -146,15 +145,8 @@ final class HomeController: UIViewController {
                 self.welcomeLabel.alpha = 1
                 self.view.layoutIfNeeded()
         }, completion: {_ in
-            Timer.scheduledTimer(withTimeInterval: 7.5, repeats: true, block: { _ in
-                UIView.transition(
-                    with: self.welcomeLabel,
-                    duration: 0.75,
-                    options: [.transitionCrossDissolve],
-                    animations: {
-                        self.welcomeLabel.text = self.welcomeLabel.text == "터치하여 일상기록" ? "소중한 일상을 기록하세요" : "터치하여 일상기록"
-                },
-                    completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
+                self.timer.fire()
             })
         }
         )
@@ -176,6 +168,7 @@ final class HomeController: UIViewController {
         welcomeLabel.alpha = 0
         welcomeLabel.text = "터치하여 일상기록"
         cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
+        timer.invalidate()
     }
     
     func setNotification() {
@@ -203,21 +196,25 @@ final class HomeController: UIViewController {
         let morningAction = UIAlertAction(title: "Morning", style: .default, handler: {_ in
             HomeController.currentTheme = .morning
             UserDefaults.standard.set("Morning", forKey: "theme")
+            self.presentRestartAlert()
         })
         let afternoonAction = UIAlertAction(title: "Afternoon", style: .default, handler: {_ in
             HomeController.currentTheme = .afternoon
             UserDefaults.standard.set("Afternoon", forKey: "theme")
+            self.presentRestartAlert()
         })
         let eveningAction = UIAlertAction(title: "Evening", style: .default, handler: {_ in
             HomeController.currentTheme = .evening
             UserDefaults.standard.set("Evening", forKey: "theme")
+            self.presentRestartAlert()
         })
         let nightAction = UIAlertAction(title: "Night", style: .default, handler: {_ in
             UserDefaults.standard.set("Night", forKey: "theme")
+            self.presentRestartAlert()
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         [morningAction, afternoonAction, eveningAction, nightAction, cancelAction].forEach { alert.addAction($0) }
-        present(alert, animated: true)
+        present(alert, animated: true, completion: nil)
     }
     
     // notifications
@@ -228,23 +225,44 @@ final class HomeController: UIViewController {
     @objc func handleWillEnterForegroundNotification() {
         configureAnimation()
     }
-}
-
-
-// MARK: - Methods
-
-private func defineThemes() {
-    switch UserDefaults.standard.string(forKey: "theme") {
-    case "Morning":
-        HomeController.currentTheme = .morning
-    case "Afternoon":
-        HomeController.currentTheme = .afternoon
-    case "Evening":
-        HomeController.currentTheme = .evening
-    case "Night":
-        HomeController.currentTheme = .night
-    default:
-        HomeController.currentTheme = .night
+    
+    
+    // MARK: - Methods
+    
+    private func defineThemes() {
+        switch UserDefaults.standard.string(forKey: "theme") {
+        case "Morning":
+            HomeController.currentTheme = .morning
+        case "Afternoon":
+            HomeController.currentTheme = .afternoon
+        case "Evening":
+            HomeController.currentTheme = .evening
+        case "Night":
+            HomeController.currentTheme = .night
+        default:
+            HomeController.currentTheme = .night
+        }
+    }
+    
+    private func presentRestartAlert() {
+        let alert = UIAlertController(title: "재시작", message: "테마 적용을 위해 앱을 재시작하겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "확인", style: .destructive, handler: { _ in exit(-1) })
+        [cancelAction, confirmAction].forEach { alert.addAction($0) }
+        present(alert, animated: true)
+    }
+    
+    private func startTimer() {
+        self.timer = Timer.scheduledTimer(withTimeInterval: 7.5, repeats: true, block: { _ in
+            UIView.transition(
+                with: self.welcomeLabel,
+                duration: 0.75,
+                options: [.transitionCrossDissolve],
+                animations: {
+                    self.welcomeLabel.text = self.welcomeLabel.text == "터치하여 일상기록" ? "소중한 일상을 기록하세요" : "터치하여 일상기록"
+            },
+                completion: nil)
+        })
     }
 }
 
@@ -257,9 +275,9 @@ extension HomeController: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    let originalImage = info[.originalImage] as! UIImage
-    let editedImage = info[.editedImage] as? UIImage
-    let selectedImage = editedImage ?? originalImage
+        let originalImage = info[.originalImage] as! UIImage
+        let editedImage = info[.editedImage] as? UIImage
+        let selectedImage = editedImage ?? originalImage
         
         if selectedImage == editedImage {
             print("editedImg")
