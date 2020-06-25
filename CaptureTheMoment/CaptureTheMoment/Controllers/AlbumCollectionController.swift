@@ -184,9 +184,11 @@ extension AlbumCollectionController: UICollectionViewDelegate {
         let imageData = album[indexPath.item].image ?? Data()
         let image = UIImage(data: imageData) ?? UIImage()
         let comment = album[indexPath.item].comment ?? ""
+        let location = album[indexPath.item].imageTag ?? ""
         
         DetailVC.image = image
         DetailVC.commentLabel.text = comment
+        DetailVC.locationLabel.text = location
         DetailVC.selectedIndexPath = indexPath
         
         naviDetailVC.modalPresentationStyle = .fullScreen

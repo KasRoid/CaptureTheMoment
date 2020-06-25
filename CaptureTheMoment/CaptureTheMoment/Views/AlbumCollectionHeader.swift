@@ -35,11 +35,6 @@ class AlbumCollectionHeader: UICollectionReusableView {
     
     // MARK: - UI
     private func configureUI() {
-//        let blurEffect = UIBlurEffect(style: .light)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = self.frame
-//        addSubview(blurEffectView)
-        
         [titleLabel].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

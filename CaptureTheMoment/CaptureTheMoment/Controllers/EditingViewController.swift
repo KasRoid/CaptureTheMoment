@@ -13,6 +13,7 @@ class EditingViewController: UIViewController {
     let persistenceManager: PersistenceManager
     var selectedIndexPath: IndexPath = []
     var commentTitleLabelBottomAnchor: NSLayoutConstraint!
+    var locationTitleLabelBottomAnchor: NSLayoutConstraint!
     
     lazy var cancelBtn: UIBarButtonItem = {
         let barButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelBtn(_:)))
@@ -36,24 +37,38 @@ class EditingViewController: UIViewController {
         return label
     }()
     
-    lazy var commentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Comment"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = colorPalette.textColor
-        label.layer.borderWidth = 2.0
-        label.layer.borderColor = UIColor.clear.cgColor
-        label.backgroundColor = .clear
-        return label
-    }()
-    
     lazy var commentTextField: UITextField = {
         let textField = UITextField()
         textField.text = ""
         textField.font = UIFont.systemFont(ofSize: 18)
         textField.textColor = colorPalette.textColor
-//        textField.placeholder = "Comment"
-        textField.attributedPlaceholder = NSAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor])
+        //        textField.placeholder = "Comment"
+        textField.attributedPlaceholder = NSAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
+        textField.delegate = self
+        textField.clearButtonMode = .whileEditing
+        textField.keyboardAppearance = .dark
+        textField.becomeFirstResponder()
+        return textField
+    }()
+    
+    private lazy var locationTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Location"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = colorPalette.textColor
+        label.alpha = commentTextField.text!.isEmpty ? 0 : 1
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    lazy var locationTextField: UITextField = {
+        let textField = UITextField()
+        textField.text = ""
+        textField.font = UIFont.systemFont(ofSize: 18)
+        textField.textColor = colorPalette.textColor
+        //        textField.placeholder = "Comment"
+        textField.attributedPlaceholder = NSAttributedString(string: "Location", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
         textField.delegate = self
         textField.clearButtonMode = .whileEditing
         textField.keyboardAppearance = .dark
@@ -111,26 +126,39 @@ class EditingViewController: UIViewController {
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
-        [commentTitleLabel, commentTextField, deleteBtn, deleteLineLabel].forEach {
+        [commentTitleLabel, commentTextField, locationTitleLabel, locationTextField, deleteBtn, deleteLineLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         commentTitleLabelBottomAnchor = commentTitleLabel.bottomAnchor.constraint(equalTo: commentTextField.topAnchor, constant: 0)
+        locationTitleLabelBottomAnchor = locationTitleLabel.bottomAnchor.constraint(equalTo: locationTextField.topAnchor, constant: 0)
         
         NSLayoutConstraint.activate([
+            // Comment
             commentTitleLabelBottomAnchor,
             commentTitleLabel.leadingAnchor.constraint(equalTo: commentTextField.leadingAnchor),
             commentTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
             commentTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
-            commentTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
+            commentTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150),
             commentTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
             
+            // Location
+            locationTitleLabelBottomAnchor,
+            locationTitleLabel.leadingAnchor.constraint(equalTo: locationTextField.leadingAnchor),
+            locationTitleLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            locationTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            locationTextField.topAnchor.constraint(equalTo: commentTextField.bottomAnchor, constant: 40),
+            locationTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
+            
+            
+            // Delete
             deleteLineLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
             deleteLineLabel.heightAnchor.constraint(equalToConstant: 40),
             deleteLineLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
-            deleteLineLabel.topAnchor.constraint(equalTo: commentTextField.bottomAnchor, constant: 40),
+            deleteLineLabel.topAnchor.constraint(equalTo: commentTextField.bottomAnchor, constant: 120),
             
             deleteBtn.centerXAnchor.constraint(equalTo: deleteLineLabel.centerXAnchor, constant: 0),
             deleteBtn.centerYAnchor.constraint(equalTo: deleteLineLabel.centerYAnchor, constant: 0),
@@ -149,9 +177,17 @@ class EditingViewController: UIViewController {
         navi.viewControllers.forEach {
             guard let vc = $0 as? DetailViewController else { return }
             vc.commentLabel.text = self.commentTextField.text
+            vc.locationLabel.text = self.locationTextField.text
+            if locationTextField.text?.isEmpty == true {
+                vc.locationLabelPlaceholder.alpha = 1
+            }
+            else {
+                vc.locationLabelPlaceholder.alpha = 0
+            }
         }
         album[selectedIndexPath.item].comment = commentTextField.text
-        persistenceManager.updateData(index: selectedIndexPath.item, textField: commentTextField)
+        album[selectedIndexPath.item].imageTag = locationTextField.text
+        persistenceManager.updateData(index: selectedIndexPath.item, textField: commentTextField, location: locationTextField)
         dismiss(animated: true)
     }
     
@@ -190,6 +226,25 @@ extension EditingViewController: UITextFieldDelegate {
                 animations: {
                     self.commentTitleLabelBottomAnchor.constant = 0
                     self.commentTitleLabel.alpha = 1
+                    self.view.layoutIfNeeded()
+            })
+        }
+        
+        if locationTextField.text?.isEmpty == true {
+            UIView.animate(
+                withDuration: 0.3,
+                animations: {
+                    self.locationTitleLabelBottomAnchor.constant = 20
+                    self.locationTitleLabel.alpha = 0
+                    self.view.layoutIfNeeded()
+            })
+        }
+        else {
+            UIView.animate(
+                withDuration: 0.3,
+                animations: {
+                    self.locationTitleLabelBottomAnchor.constant = 0
+                    self.locationTitleLabel.alpha = 1
                     self.view.layoutIfNeeded()
             })
         }
