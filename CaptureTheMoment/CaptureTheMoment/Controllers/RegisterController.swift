@@ -7,16 +7,19 @@
 //
 
 import UIKit
+import MapKit
 
 final class RegisterController: UIViewController {
     
     // MARK: - Properties
     let persistenceManager: PersistenceManager
     
+    let locationManager = CLLocationManager()
     lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .systemBackground
-        image.layer.cornerRadius = view.bounds.width / 13
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 5
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -29,24 +32,48 @@ final class RegisterController: UIViewController {
         let button = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveAction(_:)))
         return button
     }()
-        
-    lazy var contentTitleTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "멋진 제목을 지어주세요"
-        tf.borderStyle = .roundedRect
-        return tf
+    lazy var locationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "사진 찍은 장소"
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 16)
+        return label
     }()
-    
+    lazy var locationButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        button.layer.cornerRadius = 5
+        button.setTitle("내 위치 찾기", for: .normal)
+        button.setImage(UIImage(systemName: "location.circle"), for: .normal)
+        button.addTarget(self, action: #selector(locationUpdate(_:)), for: .touchUpInside)
+        return button
+    }()
+    lazy var divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        return view
+    }()
     lazy var contentTextView: UITextView = {
         let tv = UITextView()
         tv.font = UIFont.preferredFont(forTextStyle: .body)
-        tv.text = "당신의 이야기를 적어주세요"
-        tv.textColor = .lightGray
-        tv.layer.borderColor = UIColor.lightGray.cgColor
-        tv.layer.borderWidth = 1
+        tv.backgroundColor = .clear
+        tv.textColor = colorPalette.menuColor
         tv.layer.cornerRadius = 5
         tv.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return tv
+    }()
+    lazy var placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Input comment..."
+        label.textColor = .lightGray
+        return label
+    }()
+    private let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(style: .large)
+        indicatorView.color = .white
+        indicatorView.hidesWhenStopped = true // 애니메이션이 끝났을 때 숨겨짐
+        return indicatorView
     }()
     
     
@@ -63,33 +90,51 @@ final class RegisterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        setLayout()
+        setConstraint()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        contentTitleTextField.becomeFirstResponder()
+        contentTextView.becomeFirstResponder()
     }
     
     // MARK: - UI
     
-    func setLayout() {
+    func setConstraint() {
         let spacing: CGFloat = 16
         let safeArea = view.safeAreaLayoutGuide
         
-        [imageView, contentTextView, contentTitleTextField].forEach({$0.translatesAutoresizingMaskIntoConstraints = false})
+        [imageView, contentTextView, divider, locationButton, locationLabel, placeholderLabel, indicatorView].forEach({$0.translatesAutoresizingMaskIntoConstraints = false})
         
         [imageView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: spacing * 2),
          imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
-            imageView.widthAnchor.constraint(equalToConstant: 150),
-            imageView.heightAnchor.constraint(equalToConstant: 150),
-                        contentTitleTextField.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: spacing * 2),
-            contentTitleTextField.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
-            contentTitleTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            contentTitleTextField.heightAnchor.constraint(equalToConstant: 40),
-            contentTextView.topAnchor.constraint(equalTo: contentTitleTextField.bottomAnchor, constant: spacing / 3),
-            contentTextView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
-            contentTextView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
-            contentTextView.heightAnchor.constraint(equalToConstant: 200)].forEach({$0.isActive = true})
+         imageView.widthAnchor.constraint(equalToConstant: 150),
+         imageView.heightAnchor.constraint(equalToConstant: 200),
+         
+         contentTextView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: spacing * 2),
+         contentTextView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
+         contentTextView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+         contentTextView.heightAnchor.constraint(equalToConstant: 200),
+         
+         placeholderLabel.topAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 10),
+         placeholderLabel.leadingAnchor.constraint(equalTo: contentTextView.leadingAnchor, constant: 16),
+         
+         locationLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+         locationLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+         locationLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: spacing),
+         locationLabel.heightAnchor.constraint(equalToConstant: 30),
+         
+         divider.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
+         divider.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
+         divider.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: spacing),
+         divider.heightAnchor.constraint(equalToConstant: 1),
+         
+         locationButton.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 10),
+         locationButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+         locationButton.widthAnchor.constraint(equalToConstant: 250),
+         locationButton.heightAnchor.constraint(equalToConstant: 70),
+         
+         indicatorView.centerXAnchor.constraint(equalTo: locationButton.centerXAnchor, constant: 0),
+         indicatorView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor, constant: 0)].forEach({$0.isActive = true})
     }
     
     private func setUI() {
@@ -114,20 +159,30 @@ final class RegisterController: UIViewController {
         contentTextView.delegate = self
         view.addSubview(contentTextView)
         
-        // contentTitleTextField
-        contentTitleTextField.addLeftPadding()
-        contentTitleTextField.delegate = self
-        view.addSubview(contentTitleTextField)
+        // placeholder
+        view.addSubview(placeholderLabel)
+        
+        // locationLabel
+        view.addSubview(locationLabel)
+        
+        // divider
+        view.addSubview(divider)
+        
+        // locationButton
+        locationManager.delegate = self
+        view.addSubview(locationButton)
+        
+        // indicator view
+        locationButton.addSubview(indicatorView)
         
         // navigation
+        navigationItem.title = "Memory"
         navigationItem.rightBarButtonItem = saveButton
         navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.title = "기록"
         navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.title = "Memory"
-        navigationController?.navigationBar.tintColor = colorPalette.upperGradientColor
     }
     
     
@@ -142,68 +197,99 @@ final class RegisterController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func locationUpdate(_ sender: UIButton) {
+        checkAuthorizationStatus()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-}
-
-
-// MARK: - UITextFieldDelegate
-extension RegisterController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-    }
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-    }
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-    }
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        return true
-    }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return true
-    }
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return true
-    }
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return true
-    }
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-    }
-}
-
-// MARK: - UITextViewDelegate
-extension RegisterController: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard contentTextView.text != "" else {
-            contentTextView.text = "당신의 이야기를 적어주세요"
-            return
+    
+    // MARK: - Location
+    func checkAuthorizationStatus() {
+        switch CLLocationManager.authorizationStatus() { // 권한 상태 체크
+        case .notDetermined: // 사용자에게 물어봐야하는 상황
+            locationManager.requestWhenInUseAuthorization() // 사용자에게 창을 띄워 권한 요청
+        case .restricted, .denied: break // 거절되어 있는 상태
+        case .authorizedWhenInUse: // When in use 허용되어 있는 상태
+            fallthrough
+        case .authorizedAlways: // always 허용되어 있는 상태
+            startUpdatingLocation()
+        @unknown default: fatalError() // 언노운은 개발자에게 알려주는 용도. 나중에 케이스가 추가될지도 모르는부분
         }
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        contentTextView.text = ""
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-    }
-    
-    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        return true
-    }
-    
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        return true
+    func startUpdatingLocation() {
+        let status = CLLocationManager.authorizationStatus() // 권한 상태 체크
+        guard status == .authorizedAlways || status == .authorizedWhenInUse, // when in use 또는 always이고 location services가 이용가능이면
+            CLLocationManager.locationServicesEnabled()
+            else { return }
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10.0
+        locationManager.requestLocation()
+        
+        indicatorView.startAnimating()
+        locationButton.setImage(UIImage(systemName: ""), for: .normal)
+        locationButton.setTitle("", for: .normal)
     }
 }
 
-extension UITextField {
-    func addLeftPadding() {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = ViewMode.always
+
+
+
+
+
+// MARK: - UITextVIewDelegate
+extension RegisterController: UITextViewDelegate {
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        print("\n----------[ DidChangeSelection ]----------\n")
+        if textView.text.isEmpty {
+            placeholderLabel.isHidden = false
+        } else {
+            placeholderLabel.isHidden = true
+            // save text
+        }
     }
 }
+
+// MARK: - CLLocationManagerDelegate
+extension RegisterController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status { // 사용 권한 상태에 따라
+        case .authorizedWhenInUse, .authorizedAlways:
+            print("Authorized")
+        default:
+            print("Unauthorized")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let current = locations.last!
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(current) { placeMark, error in
+            print("\n---------- [ 위경도 -> 주소 ] ----------")
+            if error != nil {
+                return print(error!.localizedDescription)
+            }
+            
+            // 국가별 주소체계에 따라 어떤 속성 값을 가질지 다름
+            guard let address = placeMark?.first, // placeMark의 첫번째 요소에 들어있는 주소를 꺼내옴
+                let country = address.country,
+                let administrativeArea = address.administrativeArea,
+                let locality = address.locality,
+                let name = address.name
+                else { return }
+            
+            self.locationLabel.text = "\(country) \(administrativeArea) \(locality) \(name)"
+        }
+        // 위치 찾기 버튼 재구성 및 인디케이터 정지
+        locationButton.setTitle("내 위치 찾기", for: .normal)
+        locationButton.setImage(UIImage(systemName: "location.circle"), for: .normal)
+        indicatorView.stopAnimating()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        fatalError("error")
+    }
+}
+

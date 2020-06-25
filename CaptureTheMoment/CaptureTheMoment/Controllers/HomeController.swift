@@ -14,6 +14,7 @@ final class HomeController: UIViewController {
     let persistenceManager: PersistenceManager
     
     static var currentTheme: ColorTheme = .night
+    var timer = Timer()
     
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
@@ -42,8 +43,7 @@ final class HomeController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .camera
-        imagePicker.allowsEditing = true
-        //        imagePicker.cameraOverlayView?.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        imagePicker.cameraFlashMode = .off
         return imagePicker
     }()
     
@@ -106,7 +106,7 @@ final class HomeController: UIViewController {
         let upperColor: CGColor = colorPalette.upperGradientColor.cgColor
         let lowerColor: CGColor = colorPalette.lowerGradientColor.cgColor
         gradient.colors = [upperColor, lowerColor]
-        gradient.locations = [0 ,1]
+        gradient.locations = [0, 1]
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
@@ -197,7 +197,7 @@ final class HomeController: UIViewController {
     }
     
     @objc private func handleSettingBtn(_ sender: UIButton) {
-        let alert = UIAlertController(title: "테마 선택", message: "원하는 테마를 선택하세요. 새로운 테마는 다음 앱 실행 시부터 적용됩니다.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "테마 선택", message: "원하는 테마를 선택하세요. \n 새로운 테마는 다음 앱 실행 시부터 적용됩니다.", preferredStyle: .actionSheet)
         let morningAction = UIAlertAction(title: "Morning", style: .default, handler: {_ in
             HomeController.currentTheme = .morning
             UserDefaults.standard.set("Morning", forKey: "theme")
@@ -255,23 +255,19 @@ extension HomeController: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let originalImage = info[.originalImage] as! UIImage
-        let editedImage = info[.editedImage] as? UIImage
-        let selectedImage = editedImage ?? originalImage
+    let originalImage = info[.originalImage] as! UIImage
+    let editedImage = info[.editedImage] as? UIImage
+    let selectedImage = editedImage ?? originalImage
         
         let rc = RegisterController(persistenceManager: persistenceManager)
         rc.imageFromPicker = selectedImage
         
-        picker.dismiss(animated: true)
-        #if true
-        // push
-        navigationController?.modalTransitionStyle = .coverVertical
-        navigationController?.pushViewController(rc, animated: true)
-        #else
-        // present
-        rc.modalPresentationStyle = .overFullScreen
-        present(rc, animated: true)
-        #endif
+        picker.dismiss(animated: true, completion: {
+            let rc = RegisterController(persistenceManager: PersistenceManager.shared)
+            rc.imageFromPicker = selectedImage
+            self.navigationController?.modalTransitionStyle = .coverVertical
+            self.navigationController?.pushViewController(rc, animated: true)
+        })
     }
     
 }
