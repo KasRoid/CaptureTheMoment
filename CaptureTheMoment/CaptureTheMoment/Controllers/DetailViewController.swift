@@ -31,7 +31,6 @@ final class DetailViewController: UIViewController {
         label.text = "Comment"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = colorPalette.menuColor
-        label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
         label.backgroundColor = .clear
         return label
@@ -42,6 +41,18 @@ final class DetailViewController: UIViewController {
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = colorPalette.menuColor
+        label.numberOfLines = 0
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    lazy var commentLabelPlaceholder: UILabel = {
+        let label = UILabel()
+        label.text = "저장된 코멘트가 없습니다"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = colorPalette.menuColor.withAlphaComponent(0.8)
+        label.alpha = 1
         label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -65,6 +76,18 @@ final class DetailViewController: UIViewController {
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = colorPalette.menuColor
+        label.numberOfLines = 0
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    lazy var locationLabelPlaceholder: UILabel = {
+        let label = UILabel()
+        label.text = "저장된 장소 정보가 없습니다"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = colorPalette.menuColor.withAlphaComponent(0.8)
+        label.alpha = 0
         label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -122,7 +145,7 @@ final class DetailViewController: UIViewController {
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
-        [imageViewer, commentTitleLabel, commentLabel, locationTitleLabel, locationLabel].forEach {
+        [imageViewer, commentTitleLabel, commentLabel, commentLabelPlaceholder, locationTitleLabel, locationLabel, locationLabelPlaceholder].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -135,27 +158,34 @@ final class DetailViewController: UIViewController {
             imageViewer.widthAnchor.constraint(equalToConstant: view.bounds.width - spacing * 3.5),
             imageViewer.heightAnchor.constraint(equalToConstant: view.bounds.height * 3 / 7),
             
-            // commentTitleLabel Layout
+            // comment Layout
             commentTitleLabel.topAnchor.constraint(equalTo: imageViewer.bottomAnchor, constant: spacing * 2),
             commentTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
-            // commentLabel Layout
             commentLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing / 3),
             commentLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             
-            // locationTitleLabel Layout
+            commentLabelPlaceholder.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing / 3),
+            commentLabelPlaceholder.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
+            commentLabelPlaceholder.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
+            
+            // location Layout
             locationTitleLabel.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: spacing * 2),
             locationTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             locationTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
-            // locationLabel Layout
             locationLabel.topAnchor.constraint(equalTo: locationTitleLabel.bottomAnchor, constant: spacing / 3),
             locationLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             locationLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
+            
+            locationLabelPlaceholder.topAnchor.constraint(equalTo: locationTitleLabel.bottomAnchor, constant: spacing / 3),
+            locationLabelPlaceholder.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
+            locationLabelPlaceholder.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             ].forEach { $0.isActive = true }
         
+        checkLocationInfo()
         setImage()
     }
     
@@ -166,6 +196,7 @@ final class DetailViewController: UIViewController {
         
         targetedVC.selectedIndexPath = self.selectedIndexPath
         targetedVC.commentTextField.text = commentLabel.text
+        targetedVC.locationTextField.text = locationLabel.text
         
         present(nextVC, animated: true, completion: nil)
     }
@@ -178,5 +209,11 @@ final class DetailViewController: UIViewController {
     // MARK: - Private Methods
     func setImage() {
         imageViewer.image = image
+    }
+    
+    private func checkLocationInfo() {
+        if locationLabel.text?.isEmpty == true {
+            locationLabelPlaceholder.alpha = 1
+        }
     }
 }
