@@ -45,7 +45,6 @@ final class RegisterController: UIViewController {
         button.backgroundColor = colorPalette.buttonColor
         button.layer.cornerRadius = 5
         button.setTitle("내 위치 찾기", for: .normal)
-        button
         button.setImage(UIImage(systemName: "location.circle"), for: .normal)
         button.addTarget(self, action: #selector(locationUpdate(_:)), for: .touchUpInside)
         return button

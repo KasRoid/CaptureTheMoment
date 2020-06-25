@@ -43,7 +43,8 @@ final class HomeController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .camera
-        imagePicker.allowsEditing = true
+//        imagePicker.allowsEditing = true
+//        imagePicker.
         imagePicker.cameraFlashMode = .off
         return imagePicker
     }()
@@ -259,6 +260,12 @@ extension HomeController: UIImagePickerControllerDelegate {
     let originalImage = info[.originalImage] as! UIImage
     let editedImage = info[.editedImage] as? UIImage
     let selectedImage = editedImage ?? originalImage
+        
+        if selectedImage == editedImage {
+            print("editedImg")
+        } else {
+            print("else")
+        }
         
         let rc = RegisterController(persistenceManager: persistenceManager)
         rc.imageFromPicker = selectedImage
