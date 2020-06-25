@@ -11,12 +11,18 @@ import UIKit
 final class DetailViewController: UIViewController {
 
     // MARK: - Properties
-    private lazy var imageViewer: UIImageView = {
+    let persistenceManager: PersistenceManager
+    
+    var image: UIImage = UIImage()
+    var selectedIndexPath: IndexPath = []
+    
+    lazy var imageViewer: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "")
         imageView.backgroundColor = .white
-        imageView.layer.cornerRadius = view.bounds.width / 13
-        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = view.bounds.width / 15
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -24,7 +30,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.text = "Comment"
         label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = #colorLiteral(red: 0.862745098, green: 0.8392156863, blue: 0.968627451, alpha: 1)
+        label.textColor = colorPalette.menuColor
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
         label.backgroundColor = .clear
@@ -33,9 +39,9 @@ final class DetailViewController: UIViewController {
     
     lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.text = "여기에 이런식으로 사용자가 작성한 코멘트가 불러와 보여집니다"
+        label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = #colorLiteral(red: 0.9568627451, green: 0.9333333333, blue: 1, alpha: 1)
+        label.textColor = colorPalette.menuColor
         label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -63,22 +69,31 @@ final class DetailViewController: UIViewController {
     
     
     // MARK: - UI
+    init(persistenceManager: PersistenceManager) {
+        self.persistenceManager = persistenceManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func configureUI() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.title = "Memory"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)]
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
+        navigationController?.navigationBar.tintColor = colorPalette.menuColor
         
         navigationItem.leftBarButtonItems = [returnBtn]
         navigationItem.rightBarButtonItems = [editBtn]
         
         // Gradient
         let gradient = CAGradientLayer()
-        let upperColor: CGColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
-        let lowerColor: CGColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        let upperColor: CGColor = colorPalette.upperGradientColor.cgColor
+        let lowerColor: CGColor = colorPalette.lowerGradientColor.cgColor
         gradient.colors = [upperColor, lowerColor]
         gradient.locations = [0 ,0.70]
         view.layer.addSublayer(gradient)
@@ -109,15 +124,28 @@ final class DetailViewController: UIViewController {
             commentLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             ].forEach { $0.isActive = true }
+        
+        setImage()
     }
     
     // MARK: - Selectors
     @objc private func handleEditBtn(_ sender: UIBarButtonItem) {
-        let nextVC = UINavigationController(rootViewController: EditingViewController())
+        let targetedVC = EditingViewController(persistenceManager: persistenceManager)
+        let nextVC = UINavigationController(rootViewController: targetedVC)
+        
+        targetedVC.selectedIndexPath = self.selectedIndexPath
+        targetedVC.commentTextField.text = commentLabel.text
+        
         present(nextVC, animated: true, completion: nil)
     }
     
     @objc private func handleReturnBtn(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private Methods
+    func setImage() {
+        imageViewer.image = image
     }
 }

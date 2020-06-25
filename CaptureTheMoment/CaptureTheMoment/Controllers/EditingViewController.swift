@@ -10,6 +10,10 @@ import UIKit
 
 class EditingViewController: UIViewController {
     
+    let persistenceManager: PersistenceManager
+    var selectedIndexPath: IndexPath = []
+    var commentTitleLabelBottomAnchor: NSLayoutConstraint!
+    
     lazy var cancelBtn: UIBarButtonItem = {
         let barButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelBtn(_:)))
         return barButton
@@ -20,11 +24,23 @@ class EditingViewController: UIViewController {
         return barButton
     }()
     
+    private lazy var commentTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Comment"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = colorPalette.textColor
+        label.alpha = commentTextField.text!.isEmpty ? 0 : 1
+        label.layer.borderWidth = 2.0
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
     lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = "Comment"
         label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = #colorLiteral(red: 0.862745098, green: 0.8392156863, blue: 0.968627451, alpha: 1)
+        label.textColor = colorPalette.textColor
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
         label.backgroundColor = .clear
@@ -33,7 +49,14 @@ class EditingViewController: UIViewController {
     
     lazy var commentTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Comment"
+        textField.text = ""
+        textField.font = UIFont.systemFont(ofSize: 18)
+        textField.textColor = colorPalette.textColor
+//        textField.placeholder = "Comment"
+        textField.attributedPlaceholder = NSAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor])
+        textField.delegate = self
+        textField.clearButtonMode = .whileEditing
+        textField.keyboardAppearance = .dark
         textField.becomeFirstResponder()
         return textField
     }()
@@ -53,38 +76,56 @@ class EditingViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Lifecycle
+    init(persistenceManager: PersistenceManager) {
+        self.persistenceManager = persistenceManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
+    
     // MARK: - UI
     private func configureUI() {
         view.backgroundColor = .white
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        navigationController?.navigationBar.barTintColor = colorPalette.upperGradientColor
         navigationItem.title = "Edit"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
+        navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationItem.leftBarButtonItems = [cancelBtn]
         navigationItem.rightBarButtonItems = [saveBtn]
         
         // Gradient
         let gradient = CAGradientLayer()
-        let upperColor: CGColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
-        let lowerColor: CGColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        let upperColor: CGColor = colorPalette.upperGradientColor.cgColor
+        let lowerColor: CGColor = colorPalette.lowerGradientColor.cgColor
         gradient.colors = [upperColor, lowerColor]
         gradient.locations = [0 ,0.70]
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
-        [commentTextField, deleteBtn, deleteLineLabel].forEach {
+        [commentTitleLabel, commentTextField, deleteBtn, deleteLineLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        commentTitleLabelBottomAnchor = commentTitleLabel.bottomAnchor.constraint(equalTo: commentTextField.topAnchor, constant: 0)
+        
         NSLayoutConstraint.activate([
+            commentTitleLabelBottomAnchor,
+            commentTitleLabel.leadingAnchor.constraint(equalTo: commentTextField.leadingAnchor),
+            commentTitleLabel.heightAnchor.constraint(equalToConstant: 30),
+            
             commentTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
+            commentTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
             
             deleteLineLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
             deleteLineLabel.heightAnchor.constraint(equalToConstant: 40),
@@ -98,7 +139,6 @@ class EditingViewController: UIViewController {
     }
     
     
-    
     // MARK: - Selectors
     @objc private func handleCancelBtn(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -110,14 +150,48 @@ class EditingViewController: UIViewController {
             guard let vc = $0 as? DetailViewController else { return }
             vc.commentLabel.text = self.commentTextField.text
         }
+        album[selectedIndexPath.item].comment = commentTextField.text
+        persistenceManager.updateData(index: selectedIndexPath.item, textField: commentTextField)
         dismiss(animated: true)
     }
     
     @objc private func handleDeleteBtn(_ sender: UIButton) {
-        let alert = UIAlertController(title: "이미지 삭제", message: "이미지를 정말 삭제하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "이미지 삭제", message: "이미지를 정말 삭제하겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        let confirmAction = UIAlertAction(title: "삭제", style: .destructive, handler: nil)
+        let confirmAction = UIAlertAction(
+            title: "삭제",
+            style: .destructive,
+            handler: { _ in
+                self.persistenceManager.deleteData(index: self.selectedIndexPath.item)
+                album.remove(at: self.selectedIndexPath.item)
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        })
         [cancelAction, confirmAction].forEach { alert.addAction($0) }
         present(alert, animated: true)
+    }
+}
+
+
+// MARK: - UITextFieldDelegate
+extension EditingViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if commentTextField.text?.isEmpty == true {
+            UIView.animate(
+                withDuration: 0.3,
+                animations: {
+                    self.commentTitleLabelBottomAnchor.constant = 20
+                    self.commentTitleLabel.alpha = 0
+                    self.view.layoutIfNeeded()
+            })
+        }
+        else {
+            UIView.animate(
+                withDuration: 0.3,
+                animations: {
+                    self.commentTitleLabelBottomAnchor.constant = 0
+                    self.commentTitleLabel.alpha = 1
+                    self.view.layoutIfNeeded()
+            })
+        }
     }
 }

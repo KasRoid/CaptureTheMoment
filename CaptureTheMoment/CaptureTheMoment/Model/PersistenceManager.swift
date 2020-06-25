@@ -66,36 +66,39 @@ final class PersistenceManager {
         }
     }
     
-    func saveData(imageView: UIImageView, textField: UITextField) {
+    func saveData(imageView: UIImageView, textView: UITextView) {
         let photo = Photo(context: self.context)
         photo.image = imageView.image?.pngData()
-        photo.comment = textField.text
-    }
-    
-    func loadPhotoData() {
-//        guard let photo = try! self.context.fetch(Photo.fetchRequest()) as? [Photo] else { return }
-        let photo = self.fetch(Photo.self)
-        self.photo = photo
-        printData()
-        
-        let deadline = DispatchTime.now() + .seconds(5)
-        DispatchQueue.main.asyncAfter(deadline: deadline, execute: updateData)
-    }
-    
-    func updateData() {
-        let firstPhoto = photo.first!
-        firstPhoto.comment! += ""
+        photo.comment = textView.text
+        photo.tag = nil
         self.save()
     }
     
-    func deleteData() {
-        let firstPhoto = photo.first!
-        self.context.delete(firstPhoto)
+    func loadPhotoData() {
+        let photo = self.fetch(Photo.self)
+        self.photo = photo
+        album.removeAll()
+                
+        self.photo.forEach {
+            let picture = Picture(image: $0.image, comment: $0.comment, imageTag: $0.tag)
+            album.append(picture)
+        }
+    }
+    
+    func updateData(index: Int, textField: UITextField) {
+        let selectedPhoto = photo[index]
+        selectedPhoto.comment! = textField.text ?? ""
+        self.save()
+    }
+    
+    func deleteData(index: Int) {
+        let selectedPhoto = photo[index]
+        self.context.delete(selectedPhoto)
         self.save()
     }
     
     func printData() {
-        photo.forEach() { print($0.comment ?? "")}
+        photo.forEach { print($0.comment ?? "")}
     }
 }
 

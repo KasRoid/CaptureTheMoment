@@ -13,6 +13,12 @@ final class AlbumCollectionCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier = "AlbumCollectionCell"
     
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleToFill
+        return imageView
+    }()
+    
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -23,10 +29,15 @@ final class AlbumCollectionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     
     // MARK: - UI
     private func configureUI() {
-        
+        addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: self.frame.height),
+            imageView.widthAnchor.constraint(equalToConstant: self.frame.width),
+        ])
     }
 }

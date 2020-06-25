@@ -10,6 +10,7 @@
 		420DA5CA249DD1ED00843B56 /* AlbumCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420DA5C9249DD1ED00843B56 /* AlbumCollectionController.swift */; };
 		420DA5CC249DD23E00843B56 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420DA5CB249DD23E00843B56 /* DetailViewController.swift */; };
 		420DA5CE249DD28F00843B56 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420DA5CD249DD28F00843B56 /* RegisterController.swift */; };
+		42558D4524A4319C00FAFD15 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42558D4424A4319C00FAFD15 /* ColorTheme.swift */; };
 		426BDDC5249DCFB200AE6D25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426BDDC4249DCFB200AE6D25 /* AppDelegate.swift */; };
 		426BDDC7249DCFB200AE6D25 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426BDDC6249DCFB200AE6D25 /* SceneDelegate.swift */; };
 		426BDDC9249DCFB200AE6D25 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426BDDC8249DCFB200AE6D25 /* HomeController.swift */; };
@@ -32,6 +33,7 @@
 		420DA5C9249DD1ED00843B56 /* AlbumCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionController.swift; sourceTree = "<group>"; };
 		420DA5CB249DD23E00843B56 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		420DA5CD249DD28F00843B56 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		42558D4424A4319C00FAFD15 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureTheMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		426BDDC4249DCFB200AE6D25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		426BDDC6249DCFB200AE6D25 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				42A2E08A24A03AA800439A62 /* AlbumManager.swift */,
 				42A2E09624A0EA8800439A62 /* PersistenceManager.swift */,
+				42558D4424A4319C00FAFD15 /* ColorTheme.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				420DA5CE249DD28F00843B56 /* RegisterController.swift in Sources */,
 				42A2E08B24A03AA800439A62 /* AlbumManager.swift in Sources */,
 				42A2E08924A0210800439A62 /* DetailImageView.swift in Sources */,
+				42558D4524A4319C00FAFD15 /* ColorTheme.swift in Sources */,
 				42A2E085249FBDFA00439A62 /* AlbumCollectionHeader.swift in Sources */,
 				42A2E09724A0EA8800439A62 /* PersistenceManager.swift in Sources */,
 				420DA5CC249DD23E00843B56 /* DetailViewController.swift in Sources */,

@@ -11,9 +11,9 @@ import UIKit
 final class AlbumCollectionController: UIViewController {
     
     // MARK: - Properties
-    let cellItem = colorItems()
+    let persistenceManager: PersistenceManager
     
-    lazy private var collectionView = { () -> UICollectionView in
+    lazy var collectionView = { () -> UICollectionView in
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: self.flowLayout)
         collectionView.register(
             AlbumCollectionCell.self,
@@ -48,7 +48,7 @@ final class AlbumCollectionController: UIViewController {
         layout.minimumInteritemSpacing = spaceBetweenEachItem
         layout.sectionInset = UIEdgeInsets(top: edge, left: edge, bottom: edge, right: edge)
         
-        layout.headerReferenceSize = CGSize(width: 40, height: 40)
+        layout.headerReferenceSize = CGSize(width: 1, height: 1)
         layout.footerReferenceSize = CGSize(width: 1, height: 1)
         return layout
     }()
@@ -58,28 +58,37 @@ final class AlbumCollectionController: UIViewController {
         barButton.tintColor = .white
         return barButton
     }()
-        
+    
     
     // MARK: - Lifecycle
+    init(persistenceManager: PersistenceManager) {
+        self.persistenceManager = persistenceManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
     }
     
     
     // MARK: - UI
     private func configureUI() {
         view.backgroundColor = .white
-        collectionView.backgroundColor = #colorLiteral(red: 0.6509803922, green: 0.6941176471, blue: 0.8823529412, alpha: 1)
+        collectionView.backgroundColor = colorPalette.backgourndColor
         
         navigationItem.title = "Album"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
+        navigationController?.navigationBar.tintColor = colorPalette.menuColor
+        navigationController?.navigationBar.backgroundColor = colorPalette.backgourndColor.withAlphaComponent(0.8)
         navigationController?.navigationBar.barStyle = .black
         
         navigationItem.leftBarButtonItems = [backBtn]
@@ -92,9 +101,9 @@ final class AlbumCollectionController: UIViewController {
             let statusBarHeight: CGFloat = app.statusBarFrame.size.height
             
             let statusbarView = UIView()
-            statusbarView.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1).withAlphaComponent(0.8)
+            statusbarView.backgroundColor = colorPalette.backgourndColor.withAlphaComponent(0.8)
             view.addSubview(statusbarView)
-          
+            
             statusbarView.translatesAutoresizingMaskIntoConstraints = false
             statusbarView.heightAnchor
                 .constraint(equalToConstant: statusBarHeight).isActive = true
@@ -104,7 +113,7 @@ final class AlbumCollectionController: UIViewController {
                 .constraint(equalTo: view.topAnchor).isActive = true
             statusbarView.centerXAnchor
                 .constraint(equalTo: view.centerXAnchor).isActive = true
-          
+            
         } else {
             let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
             statusBar?.backgroundColor = UIColor.red
@@ -117,8 +126,14 @@ final class AlbumCollectionController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // 미구현
     @objc private func handleDeleteBtn(_ sender: UIBarButtonItem) {
         
+    }
+    
+    // MARK: - Methods
+    func reloadCollectionView() {
+        collectionView.reloadData()
     }
 }
 
@@ -135,7 +150,7 @@ extension AlbumCollectionController: UICollectionViewDataSource {
                 ofKind: kind,
                 withReuseIdentifier: AlbumCollectionHeader.identifier,
                 for: indexPath) as! AlbumCollectionHeader
-            header.titleLabel.text = "Section"
+            header.titleLabel.text = ""
             return header
         }
         else {
@@ -148,12 +163,13 @@ extension AlbumCollectionController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellItem.items.count
+        return album.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCollectionCell.identifier, for: indexPath)
-        cell.backgroundColor = cellItem.items[indexPath.item].color
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCollectionCell.identifier, for: indexPath) as! AlbumCollectionCell
+        let imageData = album[indexPath.item].image ?? Data()
+        cell.imageView.image = UIImage(data: imageData)!
         return cell
     }
 }
@@ -162,10 +178,20 @@ extension AlbumCollectionController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension AlbumCollectionController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController()
+        let DetailVC = DetailViewController(persistenceManager: persistenceManager)
         let naviDetailVC = UINavigationController(rootViewController: DetailVC)
-        naviDetailVC.modalPresentationStyle = .overFullScreen
+           
+        let imageData = album[indexPath.item].image ?? Data()
+        let image = UIImage(data: imageData) ?? UIImage()
+        let comment = album[indexPath.item].comment ?? ""
+        
+        DetailVC.image = image
+        DetailVC.commentLabel.text = comment
+        DetailVC.selectedIndexPath = indexPath
+        
+        naviDetailVC.modalPresentationStyle = .fullScreen
         naviDetailVC.modalTransitionStyle = .crossDissolve
         present(naviDetailVC, animated: true, completion: nil)
     }
 }
+
