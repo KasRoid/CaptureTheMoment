@@ -66,11 +66,11 @@ final class PersistenceManager {
         }
     }
     
-    func saveData(imageView: UIImageView, textView: UITextView) {
+    func saveData(imageView: UIImageView, textView: UITextView, locationLabel: UILabel) {
         let photo = Photo(context: self.context)
         photo.image = imageView.image?.pngData()
         photo.comment = textView.text
-        photo.tag = nil
+        photo.tag = locationLabel.text == "사진 찍은 장소" ? nil : locationLabel.text
         self.save()
     }
     

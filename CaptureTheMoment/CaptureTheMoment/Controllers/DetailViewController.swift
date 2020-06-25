@@ -9,7 +9,7 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-
+    
     // MARK: - Properties
     let persistenceManager: PersistenceManager
     
@@ -38,6 +38,29 @@ final class DetailViewController: UIViewController {
     }()
     
     lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = colorPalette.menuColor
+        label.numberOfLines = 0
+        label.layer.borderWidth = 2.0
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private lazy var locationTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Location"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = colorPalette.menuColor
+        label.layer.borderWidth = 2.0
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 18)
@@ -99,7 +122,7 @@ final class DetailViewController: UIViewController {
         view.layer.addSublayer(gradient)
         gradient.frame = view.frame
         
-        [imageViewer, commentTitleLabel, commentLabel].forEach {
+        [imageViewer, commentTitleLabel, commentLabel, locationTitleLabel, locationLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -113,16 +136,24 @@ final class DetailViewController: UIViewController {
             imageViewer.heightAnchor.constraint(equalToConstant: view.bounds.height * 3 / 7),
             
             // commentTitleLabel Layout
-            commentTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentTitleLabel.topAnchor.constraint(equalTo: imageViewer.bottomAnchor, constant: spacing * 2),
             commentTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
             // commentLabel Layout
-            commentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             commentLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing / 3),
             commentLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             commentLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
+            
+            // locationTitleLabel Layout
+            locationTitleLabel.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: spacing * 2),
+            locationTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
+            locationTitleLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            // locationLabel Layout
+            locationLabel.topAnchor.constraint(equalTo: locationTitleLabel.bottomAnchor, constant: spacing / 3),
+            locationLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
+            locationLabel.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             ].forEach { $0.isActive = true }
         
         setImage()
