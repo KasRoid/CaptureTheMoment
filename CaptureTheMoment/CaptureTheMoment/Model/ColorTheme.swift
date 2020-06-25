@@ -51,7 +51,6 @@ struct ColorPalette {
             colorPalette.menuColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             colorPalette.upperGradientColor = #colorLiteral(red: 0.9906017184, green: 0.4278769207, blue: 0.1290226212, alpha: 1)
             colorPalette.lowerGradientColor = #colorLiteral(red: 0.9906017184, green: 0.3689621091, blue: 0.06245584041, alpha: 1)
-            
             colorPalette.buttonColor = #colorLiteral(red: 0.8636735082, green: 0.8400102258, blue: 0.9668851495, alpha: 1)
             colorPalette.circleButtonColor = #colorLiteral(red: 0.9568627477, green: 0.6448849681, blue: 0.5729333288, alpha: 1)
             colorPalette.circleBtnCameraColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)

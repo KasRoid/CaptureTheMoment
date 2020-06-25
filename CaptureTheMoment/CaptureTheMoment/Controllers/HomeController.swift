@@ -14,7 +14,7 @@ final class HomeController: UIViewController {
     let persistenceManager: PersistenceManager
     static var currentTheme: ColorTheme = .night
     var timer = Timer()
-
+    
     
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
@@ -76,6 +76,7 @@ final class HomeController: UIViewController {
         setNotification()
         persistenceManager.loadPhotoData()
         configureUI()
+        startTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +84,7 @@ final class HomeController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .clear
         colorPalette.changeColorTheme(colorTheme: HomeController.currentTheme)
         persistenceManager.loadPhotoData()
+        restartTimer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -144,12 +146,7 @@ final class HomeController: UIViewController {
                 self.welcomeLabelBottomAnchorConstant.constant = -50
                 self.welcomeLabel.alpha = 1
                 self.view.layoutIfNeeded()
-        }, completion: {_ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
-                self.timer.fire()
-            })
-        }
-        )
+        }, completion: nil)
         
         UIView.animate( // cameraBtn 숨 쉬는 애니메이션
             withDuration: 1.0,
@@ -168,7 +165,6 @@ final class HomeController: UIViewController {
         welcomeLabel.alpha = 0
         welcomeLabel.text = "터치하여 일상기록"
         cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
-        timer.invalidate()
     }
     
     func setNotification() {
@@ -224,6 +220,7 @@ final class HomeController: UIViewController {
     
     @objc func handleWillEnterForegroundNotification() {
         configureAnimation()
+        restartTimer()
     }
     
     
@@ -253,7 +250,7 @@ final class HomeController: UIViewController {
     }
     
     private func startTimer() {
-        self.timer = Timer.scheduledTimer(withTimeInterval: 7.5, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 6.5, repeats: true, block: { _ in
             UIView.transition(
                 with: self.welcomeLabel,
                 duration: 0.75,
@@ -263,6 +260,11 @@ final class HomeController: UIViewController {
             },
                 completion: nil)
         })
+    }
+    
+    private func restartTimer() {
+        timer.invalidate()
+        startTimer()
     }
 }
 
