@@ -187,13 +187,12 @@ final class RegisterController: UIViewController {
     
     
     // MARK: - Selectors
-    
     @objc func cancelAction(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
     
     @objc func saveAction(_ sender: UIButton) {
-        persistenceManager.saveData(imageView: imageView, textView: contentTextView)
+        persistenceManager.saveData(imageView: imageView, textView: contentTextView, locationLabel: locationLabel)
         navigationController?.popViewController(animated: true)
     }
     
@@ -204,6 +203,7 @@ final class RegisterController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
     
     // MARK: - Location
     func checkAuthorizationStatus() {
@@ -235,10 +235,6 @@ final class RegisterController: UIViewController {
 }
 
 
-
-
-
-
 // MARK: - UITextVIewDelegate
 extension RegisterController: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -251,6 +247,7 @@ extension RegisterController: UITextViewDelegate {
         }
     }
 }
+
 
 // MARK: - CLLocationManagerDelegate
 extension RegisterController: CLLocationManagerDelegate {

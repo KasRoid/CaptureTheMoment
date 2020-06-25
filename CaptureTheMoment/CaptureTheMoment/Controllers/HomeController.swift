@@ -43,6 +43,7 @@ final class HomeController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .camera
+        imagePicker.allowsEditing = true
         imagePicker.cameraFlashMode = .off
         return imagePicker
     }()
