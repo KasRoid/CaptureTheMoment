@@ -36,14 +36,16 @@ final class RegisterController: UIViewController {
         let label = UILabel()
         label.text = "사진 찍은 장소"
         label.textAlignment = .center
+        label.textColor = colorPalette.textColor
         label.font = .boldSystemFont(ofSize: 16)
         return label
     }()
     lazy var locationButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        button.backgroundColor = colorPalette.buttonColor
         button.layer.cornerRadius = 5
         button.setTitle("내 위치 찾기", for: .normal)
+        button
         button.setImage(UIImage(systemName: "location.circle"), for: .normal)
         button.addTarget(self, action: #selector(locationUpdate(_:)), for: .touchUpInside)
         return button
