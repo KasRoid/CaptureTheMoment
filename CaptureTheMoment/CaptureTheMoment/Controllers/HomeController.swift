@@ -229,7 +229,7 @@ final class HomeController: UIViewController {
 }
 
 
-// MARK: - Properties
+// MARK: - Methods
 
 private func defineThemes() {
     switch UserDefaults.standard.string(forKey: "theme") {
