@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AudioToolbox.AudioServices
+import CoreHaptics
 
 final class HomeController: UIViewController {
     
@@ -176,6 +178,10 @@ final class HomeController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
+        
+        AudioServicesPlaySystemSoundWithCompletion(kSystemSoundID_Vibrate) {
+            print("진동")
+        }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
         present(imagePicker, animated: true)
     }
