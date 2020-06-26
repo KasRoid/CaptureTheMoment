@@ -52,7 +52,7 @@ final class DetailViewController: UIViewController {
         label.text = "저장된 코멘트가 없습니다"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = colorPalette.menuColor.withAlphaComponent(0.8)
-        label.alpha = 1
+        label.alpha = 0
         label.numberOfLines = 0
         label.layer.borderWidth = 2.0
         label.layer.borderColor = UIColor.clear.cgColor
@@ -172,7 +172,7 @@ final class DetailViewController: UIViewController {
             commentLabelPlaceholder.trailingAnchor.constraint(equalTo: imageViewer.trailingAnchor, constant: 0),
             
             // location Layout
-            locationTitleLabel.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: spacing * 2),
+            locationTitleLabel.topAnchor.constraint(equalTo: commentTitleLabel.bottomAnchor, constant: spacing * 3),
             locationTitleLabel.leadingAnchor.constraint(equalTo: imageViewer.leadingAnchor, constant: 0),
             locationTitleLabel.heightAnchor.constraint(equalToConstant: 30),
             
@@ -214,6 +214,9 @@ final class DetailViewController: UIViewController {
     private func checkLocationInfo() {
         if locationLabel.text?.isEmpty == true {
             locationLabelPlaceholder.alpha = 1
+        }
+        if commentLabel.text?.isEmpty == true {
+            commentLabelPlaceholder.alpha = 1
         }
     }
 }

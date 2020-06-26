@@ -34,7 +34,7 @@
 		420DA5CB249DD23E00843B56 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		420DA5CD249DD28F00843B56 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		42558D4424A4319C00FAFD15 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
-		426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureTheMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		426BDDC1249DCFB200AE6D25 /* 지금이야.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "지금이야.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		426BDDC4249DCFB200AE6D25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		426BDDC6249DCFB200AE6D25 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		426BDDC8249DCFB200AE6D25 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 		426BDDC2249DCFB200AE6D25 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */,
+				426BDDC1249DCFB200AE6D25 /* 지금이야.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,7 +174,7 @@
 			);
 			name = CaptureTheMoment;
 			productName = CaptureTheMoment;
-			productReference = 426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */;
+			productReference = 426BDDC1249DCFB200AE6D25 /* 지금이야.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -381,14 +381,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = DX4KVUBK56;
 				INFOPLIST_FILE = CaptureTheMoment/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.roobing.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid;
+				PRODUCT_NAME = "지금이야";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -399,14 +399,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = DX4KVUBK56;
 				INFOPLIST_FILE = CaptureTheMoment/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.roobing.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid;
+				PRODUCT_NAME = "지금이야";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

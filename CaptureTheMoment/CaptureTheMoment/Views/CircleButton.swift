@@ -28,8 +28,8 @@ class CircleButton: UIButton {
     // MARK: - UI
     private func configureUI() {
         // Colors
-        backgroundColor = #colorLiteral(red: 0.862745098, green: 0.8392156863, blue: 0.968627451, alpha: 1)
-        tintColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
+        backgroundColor = colorPalette.circleButtonColor
+        tintColor = colorPalette.circleBtnCameraColor
         layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         layer.shadowOpacity = 1.0

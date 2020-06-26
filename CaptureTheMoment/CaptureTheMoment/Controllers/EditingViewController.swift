@@ -104,6 +104,7 @@ class EditingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        print(selectedIndexPath)
     }
     
     
@@ -178,6 +179,12 @@ class EditingViewController: UIViewController {
             guard let vc = $0 as? DetailViewController else { return }
             vc.commentLabel.text = self.commentTextField.text
             vc.locationLabel.text = self.locationTextField.text
+            if commentTextField.text?.isEmpty == true {
+                vc.commentLabelPlaceholder.alpha = 1
+            }
+            else {
+                vc.commentLabelPlaceholder.alpha = 0
+            }
             if locationTextField.text?.isEmpty == true {
                 vc.locationLabelPlaceholder.alpha = 1
             }
