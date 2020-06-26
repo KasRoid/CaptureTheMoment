@@ -104,6 +104,7 @@ class EditingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        print(selectedIndexPath)
     }
     
     
