@@ -4,15 +4,16 @@
 
 ## Table of Contents
 
-- [General Info](##General-Info)
-    - [App Sketch](##App-Sketch)
-- [Technologies](##Technologies)
-- [Launch](##Launch)
-- [Scope of Functionalities](##Scope-of-Functionalities)
-    - [Feature](##Feature)
-- [Project Status](##Project-Status)
+- [General Info](#general-info)
+  - [App Sketch](#app-sketch)
+- [Technologies](#technologies)
+- [Launch](#launch)
+- [Scope of Functionalities](#scope-of-functionalities)
+  - [Feature](#feature)
+- [Project Status](#project-status)
 
 ---
+
 ## General Info
 
 **_Capture the Moment_** is for public users who need an elegant camera app and its own storage which can store clutters or temporary images. Capture the Moment is created to help organizing their native photo album. Save unavoibable clutters in Capture the Moment.
@@ -60,4 +61,4 @@ This project is created with
 
 |  Date               |  Status   |  Notes  |
 |  ----               |   ----    |   ---   |
-| **June 29th, 2020** | Pre-Alpha | Project is almost ready to lauch. However we are currently facing few minor bugs. |
+| **June 29th, 2020** | Pre-Alpha | Project is almost ready to launch. However we are currently facing few minor bugs. |
