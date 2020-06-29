@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AudioToolbox.AudioServices
 import CoreHaptics
 
 final class HomeController: UIViewController {
@@ -16,7 +15,7 @@ final class HomeController: UIViewController {
     let persistenceManager: PersistenceManager
     static var currentTheme: ColorTheme = .night
     var timer = Timer()
-    
+    var feedbackGenerator: UINotificationFeedbackGenerator?
     
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
@@ -106,6 +105,9 @@ final class HomeController: UIViewController {
     
     // MARK: - UI
     private func configureUI() {
+        feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator?.prepare()
+        
         // Gradient
         let gradient = CAGradientLayer()
         let upperColor: CGColor = colorPalette.upperGradientColor.cgColor
@@ -178,11 +180,8 @@ final class HomeController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleCameraBtn(_ sender: UIButton) {
-        
-        AudioServicesPlaySystemSoundWithCompletion(kSystemSoundID_Vibrate) {
-            print("진동")
-        }
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        feedbackGenerator?.notificationOccurred(.success)
         present(imagePicker, animated: true)
     }
     
