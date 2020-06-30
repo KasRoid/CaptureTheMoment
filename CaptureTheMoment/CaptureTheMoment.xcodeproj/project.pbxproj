@@ -16,6 +16,7 @@
 		426BDDC9249DCFB200AE6D25 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426BDDC8249DCFB200AE6D25 /* HomeController.swift */; };
 		426BDDCE249DCFB500AE6D25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 426BDDCD249DCFB500AE6D25 /* Assets.xcassets */; };
 		426BDDD1249DCFB500AE6D25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 426BDDCF249DCFB500AE6D25 /* LaunchScreen.storyboard */; };
+		429958F424AAB73E009139E3 /* CoreDataMappingModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 429958F324AAB73E009139E3 /* CoreDataMappingModel.xcmappingmodel */; };
 		42A2E081249F469A00439A62 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E080249F469A00439A62 /* CircleButton.swift */; };
 		42A2E083249FB99C00439A62 /* AlbumCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E082249FB99C00439A62 /* AlbumCollectionCell.swift */; };
 		42A2E085249FBDFA00439A62 /* AlbumCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E084249FBDF900439A62 /* AlbumCollectionHeader.swift */; };
@@ -41,6 +42,8 @@
 		426BDDCD249DCFB500AE6D25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		426BDDD0249DCFB500AE6D25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		426BDDD2249DCFB500AE6D25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		429958F224AAB444009139E3 /* DataManager v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataManager v2.xcdatamodel"; sourceTree = "<group>"; };
+		429958F324AAB73E009139E3 /* CoreDataMappingModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = CoreDataMappingModel.xcmappingmodel; sourceTree = "<group>"; };
 		42A2E080249F469A00439A62 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		42A2E082249FB99C00439A62 /* AlbumCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionCell.swift; sourceTree = "<group>"; };
 		42A2E084249FBDF900439A62 /* AlbumCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionHeader.swift; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 				42A2E08C24A0AA7500439A62 /* DataManager.xcdatamodeld */,
 				42A2E09224A0AE8800439A62 /* Photo+CoreDataClass.swift */,
 				42A2E09324A0AE8800439A62 /* Photo+CoreDataProperties.swift */,
+				429958F324AAB73E009139E3 /* CoreDataMappingModel.xcmappingmodel */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -245,6 +249,7 @@
 				42A2E09524A0AE8800439A62 /* Photo+CoreDataProperties.swift in Sources */,
 				42F4550124A2C3EF00E6245C /* EditingViewController.swift in Sources */,
 				420DA5CA249DD1ED00843B56 /* AlbumCollectionController.swift in Sources */,
+				429958F424AAB73E009139E3 /* CoreDataMappingModel.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,9 +444,10 @@
 		42A2E08C24A0AA7500439A62 /* DataManager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				429958F224AAB444009139E3 /* DataManager v2.xcdatamodel */,
 				42A2E08D24A0AA7500439A62 /* DataManager.xcdatamodel */,
 			);
-			currentVersion = 42A2E08D24A0AA7500439A62 /* DataManager.xcdatamodel */;
+			currentVersion = 429958F224AAB444009139E3 /* DataManager v2.xcdatamodel */;
 			path = DataManager.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

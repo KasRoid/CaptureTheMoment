@@ -168,7 +168,7 @@ extension AlbumCollectionController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCollectionCell.identifier, for: indexPath) as! AlbumCollectionCell
-        let imageData = album[indexPath.item].image ?? Data()
+        let imageData = album[indexPath.item].thumbnail ?? Data()
         cell.imageView.image = UIImage(data: imageData)!
         return cell
     }

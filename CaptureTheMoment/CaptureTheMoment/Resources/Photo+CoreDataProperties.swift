@@ -20,5 +20,6 @@ extension Photo {
     @NSManaged public var comment: String?
     @NSManaged public var tag: String?
     @NSManaged public var image: Data?
+    @NSManaged public var thumbnail: Data?
 
 }

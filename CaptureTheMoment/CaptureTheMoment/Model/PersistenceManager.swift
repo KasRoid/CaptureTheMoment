@@ -71,6 +71,7 @@ final class PersistenceManager {
         photo.image = imageView.image?.pngData()
         photo.comment = textView.text == nil ? "" : textView.text
         photo.tag = locationLabel.text == "사진 찍은 장소" ? "" : locationLabel.text
+        photo.thumbnail = imageView.image?.jpegData(compressionQuality: 0.1)
         self.save()
     }
     
@@ -80,7 +81,7 @@ final class PersistenceManager {
         album.removeAll()
                 
         self.photo.forEach {
-            let picture = Picture(image: $0.image, comment: $0.comment, imageTag: $0.tag)
+            let picture = Picture(image: $0.image, comment: $0.comment, imageTag: $0.tag, thumbnail: $0.thumbnail)
             album.append(picture)
         }
     }

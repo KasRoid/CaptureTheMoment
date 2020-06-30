@@ -18,6 +18,7 @@ struct Picture {
     var image: Data?
     var comment: String?
     var imageTag: String?
+    var thumbnail: Data?
 }
 
 var album = [Picture]()
