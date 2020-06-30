@@ -77,6 +77,7 @@ final class AlbumCollectionController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.reloadData()
+        persistenceManager.loadPhotoData()
     }
     
     
