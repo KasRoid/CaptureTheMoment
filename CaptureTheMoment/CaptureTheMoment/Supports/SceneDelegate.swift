@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationRootViewController
-//        window?.rootViewController = EditingViewController(persistenceManager: PersistenceManager.shared)
+//        window?.rootViewController = RegisterController(persistenceManager: PersistenceManager.shared)
         window?.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.2823529412, blue: 0.4549019608, alpha: 1)
         window?.makeKeyAndVisible()
     }

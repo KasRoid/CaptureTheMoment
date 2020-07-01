@@ -17,6 +17,9 @@ final class HomeController: UIViewController {
     var timer = Timer()
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
+    let welcomeString = "Don't Miss the Moment".localized
+    let welcomeString2 = "Remember your day".localized
+    
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
         button.layer.cornerRadius = view.bounds.width / 3
@@ -31,7 +34,7 @@ final class HomeController: UIViewController {
     
     private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "터치하여 일상기록"
+        label.text = welcomeString
         label.textColor = colorPalette.menuColor
         label.font = UIFont.systemFont(ofSize: 27)
         label.alpha = 0
@@ -118,7 +121,7 @@ final class HomeController: UIViewController {
         gradient.frame = view.frame
         
         // NavigationController Settings
-        navigationItem.title = "Capture the Moment"
+        navigationItem.title = "Moment"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationItem.rightBarButtonItems = [albumBtn]
@@ -167,7 +170,7 @@ final class HomeController: UIViewController {
     func resetAnimation() {
         welcomeLabelBottomAnchorConstant.constant = -20
         welcomeLabel.alpha = 0
-        welcomeLabel.text = "터치하여 일상기록"
+        welcomeLabel.text = welcomeString
         cameraBtn.transform = CGAffineTransform(scaleX: 1.00, y: 1.00)
     }
     
@@ -261,7 +264,7 @@ final class HomeController: UIViewController {
                 duration: 0.75,
                 options: [.transitionCrossDissolve],
                 animations: {
-                    self.welcomeLabel.text = self.welcomeLabel.text == "터치하여 일상기록" ? "소중한 일상을 기록하세요" : "터치하여 일상기록"
+                    self.welcomeLabel.text = self.welcomeLabel.text == self.welcomeString ? self.welcomeString2 : self.welcomeString
             },
                 completion: nil)
         })

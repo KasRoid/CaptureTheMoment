@@ -28,6 +28,8 @@
 		42A2E09524A0AE8800439A62 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E09324A0AE8800439A62 /* Photo+CoreDataProperties.swift */; };
 		42A2E09724A0EA8800439A62 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E09624A0EA8800439A62 /* PersistenceManager.swift */; };
 		42F4550124A2C3EF00E6245C /* EditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4550024A2C3EF00E6245C /* EditingViewController.swift */; };
+		42F522B824ACBCB500385014 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42F522BA24ACBCB500385014 /* Localizable.strings */; };
+		42F522BE24ACBE2E00385014 /* LocalizeMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F522BD24ACBE2E00385014 /* LocalizeMethods.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +37,7 @@
 		420DA5CB249DD23E00843B56 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		420DA5CD249DD28F00843B56 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		42558D4424A4319C00FAFD15 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
-		426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureTheMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		426BDDC1249DCFB200AE6D25 /* Moment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		426BDDC4249DCFB200AE6D25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		426BDDC6249DCFB200AE6D25 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		426BDDC8249DCFB200AE6D25 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,10 @@
 		42A2E09324A0AE8800439A62 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		42A2E09624A0EA8800439A62 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		42F4550024A2C3EF00E6245C /* EditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingViewController.swift; sourceTree = "<group>"; };
+		42F522B924ACBCB500385014 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42F522BB24ACBCFC00385014 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		42F522BC24ACBCFC00385014 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42F522BD24ACBE2E00385014 /* LocalizeMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeMethods.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +86,7 @@
 		426BDDC2249DCFB200AE6D25 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */,
+				426BDDC1249DCFB200AE6D25 /* Moment.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +94,7 @@
 		426BDDC3249DCFB200AE6D25 /* CaptureTheMoment */ = {
 			isa = PBXGroup;
 			children = (
+				42F522BF24ACBE3800385014 /* Localization */,
 				426BDDDB249DD0D100AE6D25 /* Views */,
 				426BDDDC249DD0E300AE6D25 /* ViewModel */,
 				426BDDD9249DD0C500AE6D25 /* Controllers */,
@@ -161,6 +168,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		42F522BF24ACBE3800385014 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				42F522BA24ACBCB500385014 /* Localizable.strings */,
+				42F522BD24ACBE2E00385014 /* LocalizeMethods.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -178,7 +194,7 @@
 			);
 			name = CaptureTheMoment;
 			productName = CaptureTheMoment;
-			productReference = 426BDDC1249DCFB200AE6D25 /* CaptureTheMoment.app */;
+			productReference = 426BDDC1249DCFB200AE6D25 /* Moment.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -203,6 +219,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 426BDDB8249DCFB200AE6D25;
 			productRefGroup = 426BDDC2249DCFB200AE6D25 /* Products */;
@@ -220,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				426BDDD1249DCFB500AE6D25 /* LaunchScreen.storyboard in Resources */,
+				42F522B824ACBCB500385014 /* Localizable.strings in Resources */,
 				426BDDCE249DCFB500AE6D25 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +260,7 @@
 				42A2E08924A0210800439A62 /* DetailImageView.swift in Sources */,
 				42558D4524A4319C00FAFD15 /* ColorTheme.swift in Sources */,
 				42A2E085249FBDFA00439A62 /* AlbumCollectionHeader.swift in Sources */,
+				42F522BE24ACBE2E00385014 /* LocalizeMethods.swift in Sources */,
 				42A2E09724A0EA8800439A62 /* PersistenceManager.swift in Sources */,
 				420DA5CC249DD23E00843B56 /* DetailViewController.swift in Sources */,
 				426BDDC7249DCFB200AE6D25 /* SceneDelegate.swift in Sources */,
@@ -260,8 +279,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				426BDDD0249DCFB500AE6D25 /* Base */,
+				42F522BB24ACBCFC00385014 /* ko */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		42F522BA24ACBCB500385014 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42F522B924ACBCB500385014 /* en */,
+				42F522BC24ACBCFC00385014 /* ko */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -271,6 +300,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -331,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -392,8 +423,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid;
-				PRODUCT_NAME = CaptureTheMoment;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid.Moment;
+				PRODUCT_NAME = Moment;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -410,8 +441,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid;
-				PRODUCT_NAME = CaptureTheMoment;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.KasRoid.Moment;
+				PRODUCT_NAME = Moment;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

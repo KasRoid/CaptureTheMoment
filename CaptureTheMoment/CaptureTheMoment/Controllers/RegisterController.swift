@@ -34,7 +34,7 @@ final class RegisterController: UIViewController {
     }()
     lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "사진 찍은 장소"
+        label.text = "아래 버튼을 눌러 장소를 추가하세요"
         label.textAlignment = .center
         label.textColor = colorPalette.textColor
         label.font = .boldSystemFont(ofSize: 16)
@@ -42,10 +42,12 @@ final class RegisterController: UIViewController {
     }()
     lazy var locationButton: UIButton = {
         let button = UIButton()
+        let image = UIImage(systemName: "location.circle")?.withTintColor(colorPalette.backgourndColor, renderingMode: .alwaysOriginal)
+        button.setImage(image, for: .normal)
+        button.setTitle(" 내 위치 찾기", for: .normal)
+        button.setTitleColor(colorPalette.backgourndColor, for: .normal)
         button.backgroundColor = colorPalette.buttonColor
         button.layer.cornerRadius = 5
-        button.setTitle("내 위치 찾기", for: .normal)
-        button.setImage(UIImage(systemName: "location.circle"), for: .normal)
         button.addTarget(self, action: #selector(locationUpdate(_:)), for: .touchUpInside)
         return button
     }()
@@ -66,7 +68,7 @@ final class RegisterController: UIViewController {
     }()
     lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Input comment..."
+        label.text = "Comment..."
         label.textColor = .lightGray
         return label
     }()
@@ -129,10 +131,10 @@ final class RegisterController: UIViewController {
          divider.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: spacing),
          divider.heightAnchor.constraint(equalToConstant: 1),
          
-         locationButton.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 10),
+         locationButton.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 15),
          locationButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-         locationButton.widthAnchor.constraint(equalToConstant: 250),
-         locationButton.heightAnchor.constraint(equalToConstant: 70),
+         locationButton.widthAnchor.constraint(equalToConstant: 170),
+         locationButton.heightAnchor.constraint(equalToConstant: 60),
          
          indicatorView.centerXAnchor.constraint(equalTo: locationButton.centerXAnchor, constant: 0),
          indicatorView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor, constant: 0)].forEach({$0.isActive = true})
@@ -239,7 +241,6 @@ final class RegisterController: UIViewController {
 // MARK: - UITextVIewDelegate
 extension RegisterController: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
-        print("\n----------[ DidChangeSelection ]----------\n")
         if textView.text.isEmpty {
             placeholderLabel.isHidden = false
         } else {
@@ -265,7 +266,6 @@ extension RegisterController: CLLocationManagerDelegate {
         let current = locations.last!
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(current) { placeMark, error in
-            print("\n---------- [ 위경도 -> 주소 ] ----------")
             if error != nil {
                 return print(error!.localizedDescription)
             }
