@@ -54,7 +54,11 @@ final class AlbumCollectionController: UIViewController {
     }()
     
     lazy private var backBtn: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.down"), style: .plain, target: self, action: #selector(handleBackBtn(_:)))
+        let barButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.uturn.down"),
+            style: .plain,
+            target: self,
+            action: #selector(handleBackBtn(_:)))
         barButton.tintColor = .white
         return barButton
     }()
@@ -86,7 +90,7 @@ final class AlbumCollectionController: UIViewController {
         view.backgroundColor = .white
         collectionView.backgroundColor = colorPalette.backgourndColor
         
-        navigationItem.title = "Album"
+        navigationItem.title = StringManager.AlbumCollectionView.barTitle.rawValue.localized
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationController?.navigationBar.backgroundColor = colorPalette.backgourndColor.withAlphaComponent(0.8)

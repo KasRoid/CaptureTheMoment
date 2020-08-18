@@ -17,8 +17,8 @@ final class HomeController: UIViewController {
     var timer = Timer()
     var feedbackGenerator: UINotificationFeedbackGenerator?
     
-    let welcomeString = "Don't Miss the Moment".localized
-    let welcomeString2 = "Remember your day".localized
+    let welcomeString = StringManager.HomeView.welcomeTitle.rawValue.localized
+    let welcomeString2 = StringManager.HomeView.welcomeTitle2.rawValue.localized
     
     private lazy var cameraBtn: CircleButton = {
         let button = CircleButton(frame: view.frame)
@@ -28,7 +28,10 @@ final class HomeController: UIViewController {
     }()
     
     private lazy var albumBtn: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: UIImage(systemName: "rectangle.stack")?.withTintColor(colorPalette.menuColor, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(handleAlbumBarBtn(_:)))
+        let barButton = UIBarButtonItem(
+            image: UIImage(systemName: "rectangle.stack")?.withTintColor(colorPalette.menuColor, renderingMode: .alwaysOriginal),
+            style: .plain,
+            target: self, action: #selector(handleAlbumBarBtn(_:)))
         return barButton
     }()
     
@@ -54,7 +57,7 @@ final class HomeController: UIViewController {
     
     private lazy var settingBtn: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Settings", for: .normal)
+        button.setTitle(StringManager.HomeView.setting.rawValue.localized, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.setTitleColor(colorPalette.textColor, for: .normal)
         button.titleLabel?.tintColor = colorPalette.textColor
@@ -121,7 +124,7 @@ final class HomeController: UIViewController {
         gradient.frame = view.frame
         
         // NavigationController Settings
-        navigationItem.title = "Moment"
+        navigationItem.title = StringManager.HomeView.barTitle.rawValue.localized
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationItem.rightBarButtonItems = [albumBtn]
@@ -196,7 +199,10 @@ final class HomeController: UIViewController {
     }
     
     @objc private func handleSettingBtn(_ sender: UIButton) {
-        let alert = UIAlertController(title: "테마 선택", message: "원하는 테마를 선택하세요. \n 새로운 테마는 다음 앱 실행 시부터 적용됩니다.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(
+            title: StringManager.HomeView.chooseTheme.rawValue.localized,
+            message: StringManager.HomeView.chooseThemeSubtitle.rawValue.localized,
+            preferredStyle: .actionSheet)
         let morningAction = UIAlertAction(title: "Morning", style: .default, handler: {_ in
             HomeController.currentTheme = .morning
             UserDefaults.standard.set("Morning", forKey: "theme")
@@ -216,7 +222,10 @@ final class HomeController: UIViewController {
             UserDefaults.standard.set("Night", forKey: "theme")
             self.presentRestartAlert()
         })
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(
+            title: StringManager.GeneralStrings.cancel.rawValue.localized,
+            style: .cancel,
+            handler: nil)
         [morningAction, afternoonAction, eveningAction, nightAction, cancelAction].forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)
     }
@@ -250,9 +259,18 @@ final class HomeController: UIViewController {
     }
     
     private func presentRestartAlert() {
-        let alert = UIAlertController(title: "재시작", message: "테마 적용을 위해 앱을 재시작하겠습니까?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        let confirmAction = UIAlertAction(title: "확인", style: .destructive, handler: { _ in exit(-1) })
+        let alert = UIAlertController(
+            title: StringManager.GeneralStrings.restart.rawValue.localized,
+            message: StringManager.HomeView.chooseThemeSubtitle.rawValue.localized,
+            preferredStyle: .alert)
+        let cancelAction = UIAlertAction(
+            title: StringManager.GeneralStrings.cancel.rawValue.localized,
+            style: .cancel,
+            handler: nil)
+        let confirmAction = UIAlertAction(
+            title: StringManager.GeneralStrings.confirm.rawValue.localized,
+            style: .destructive,
+            handler: { _ in exit(-1) })
         [cancelAction, confirmAction].forEach { alert.addAction($0) }
         present(alert, animated: true)
     }

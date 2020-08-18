@@ -6,5 +6,58 @@
   Copyright © 2020 Doyoung Song. All rights reserved.
 */
 
-"Don't Miss the Moment" = "Don't Miss the Moment";
+// HomeView
+"Moment" = "Moment";
+
+"Don't miss the Moment" = "Don't miss the Moment";
+
 "Remember your day" = "Remember your day";
+
+"Settings" = "Settings";
+
+"Choose Theme" = "Choose Theme";
+
+"Please choose the theme you want. \n The new theme will be applied after app is restarted." = "Please choose the theme you want. \n The new theme will be applied after app is restarted.";
+
+"Do you want to restart the app to apply the new theme?" = "Do you want to restart the app to apply the new theme?";
+
+"Cancel" = "Cancel";
+
+"Restart" = "Restart";
+
+"Confirm" = "Confirm";
+
+
+// AlbumCollectionView
+"Album" = "Album";
+
+
+// DetailView
+"Comment" = "Comment";
+
+"No Comment" = "No Comment";
+
+"Location" = "Location";
+
+"No Plcae Info" = "No Plcae Info";
+
+"Memory" = "Memory";
+
+"Save" = "Save";
+
+
+// EditingView
+"Delete" = "Delete";
+"Delete Image" = "Delete Image";
+"Do you really want to delete the image?" = "Do you really want to delete the image?";
+
+
+// RegisterView
+"Press below button to find location" = "Press below button to find location";
+" Check my location" = " Check my location";
+
+
+// plist
+"The app needs your authorization to access the camera." = "The app needs your authorization to access the camera.";
+"The app needs your authorization to access your location." = "The app needs your authorization to access your location.";
+"The app needs your authorization to save the picture." = "The app needs your authorization to save the picture.";

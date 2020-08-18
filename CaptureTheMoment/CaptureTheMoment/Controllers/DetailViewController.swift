@@ -28,7 +28,7 @@ final class DetailViewController: UIViewController {
     
     private lazy var commentTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Comment"
+        label.text = StringManager.GeneralStrings.comment.rawValue.localized
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = colorPalette.menuColor
         label.layer.borderColor = UIColor.clear.cgColor
@@ -49,7 +49,7 @@ final class DetailViewController: UIViewController {
     
     lazy var commentLabelPlaceholder: UILabel = {
         let label = UILabel()
-        label.text = "저장된 코멘트가 없습니다"
+        label.text = StringManager.DetailView.commentPlaceholder.rawValue.localized
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = colorPalette.menuColor.withAlphaComponent(0.8)
         label.alpha = 0
@@ -62,7 +62,7 @@ final class DetailViewController: UIViewController {
     
     private lazy var locationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Location"
+        label.text = StringManager.GeneralStrings.location.rawValue.localized
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = colorPalette.menuColor
         label.layer.borderWidth = 2.0
@@ -84,7 +84,7 @@ final class DetailViewController: UIViewController {
     
     lazy var locationLabelPlaceholder: UILabel = {
         let label = UILabel()
-        label.text = "저장된 장소 정보가 없습니다"
+        label.text = StringManager.DetailView.locationPlaceholder.rawValue.localized
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = colorPalette.menuColor.withAlphaComponent(0.8)
         label.alpha = 0
@@ -129,7 +129,7 @@ final class DetailViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.title = "Memory"
+        navigationItem.title = StringManager.DetailView.memory.rawValue.localized
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
         

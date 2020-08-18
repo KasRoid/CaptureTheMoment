@@ -16,18 +16,26 @@ class EditingViewController: UIViewController {
     var locationTitleLabelBottomAnchor: NSLayoutConstraint!
     
     lazy var cancelBtn: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelBtn(_:)))
+        let barButton = UIBarButtonItem(
+            title: StringManager.GeneralStrings.cancel.rawValue.localized,
+            style: .plain,
+            target: self,
+            action: #selector(handleCancelBtn(_:)))
         return barButton
     }()
     
     lazy var saveBtn: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSaveBtn(_:)))
+        let barButton = UIBarButtonItem(
+            title: StringManager.GeneralStrings.save.rawValue.localized,
+            style: .plain,
+            target: self,
+            action: #selector(handleSaveBtn(_:)))
         return barButton
     }()
     
     private lazy var commentTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Comment"
+        label.text = StringManager.GeneralStrings.comment.rawValue.localized
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = colorPalette.textColor
         label.alpha = commentTextField.text!.isEmpty ? 0 : 1
@@ -43,7 +51,9 @@ class EditingViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 18)
         textField.textColor = colorPalette.textColor
         //        textField.placeholder = "Comment"
-        textField.attributedPlaceholder = NSAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
+        textField.attributedPlaceholder = NSAttributedString(
+            string: StringManager.GeneralStrings.comment.rawValue.localized,
+            attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
         textField.delegate = self
         textField.clearButtonMode = .whileEditing
         textField.keyboardAppearance = .dark
@@ -53,7 +63,7 @@ class EditingViewController: UIViewController {
     
     private lazy var locationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Location"
+        label.text = StringManager.GeneralStrings.location.rawValue.localized
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = colorPalette.textColor
         label.alpha = commentTextField.text!.isEmpty ? 0 : 1
@@ -68,7 +78,9 @@ class EditingViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 18)
         textField.textColor = colorPalette.textColor
         //        textField.placeholder = "Comment"
-        textField.attributedPlaceholder = NSAttributedString(string: "Location", attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
+        textField.attributedPlaceholder = NSAttributedString(
+            string: StringManager.GeneralStrings.location.rawValue.localized,
+            attributes: [NSAttributedString.Key.foregroundColor: colorPalette.textColor.withAlphaComponent(0.8)])
         textField.delegate = self
         textField.clearButtonMode = .whileEditing
         textField.keyboardAppearance = .dark
@@ -84,7 +96,7 @@ class EditingViewController: UIViewController {
     
     lazy var deleteBtn: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("이미지 삭제하기", for: .normal)
+        button.setTitle(StringManager.EditingView.deleteImage.rawValue.localized, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         button.addTarget(self, action: #selector(handleDeleteBtn(_:)), for: .touchUpInside)
@@ -112,7 +124,7 @@ class EditingViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .white
         navigationController?.navigationBar.barTintColor = colorPalette.upperGradientColor
-        navigationItem.title = "Edit"
+        navigationItem.title = StringManager.EditingView.barTitle.rawValue.localized
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: colorPalette.menuColor]
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
         navigationItem.leftBarButtonItems = [cancelBtn]
@@ -199,10 +211,15 @@ class EditingViewController: UIViewController {
     }
     
     @objc private func handleDeleteBtn(_ sender: UIButton) {
-        let alert = UIAlertController(title: "이미지 삭제", message: "이미지를 정말 삭제하겠습니까?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let alert = UIAlertController(
+            title: StringManager.GeneralStrings.delete.rawValue.localized,
+            message: StringManager.EditingView.deleteImageSubtitle.rawValue.localized, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(
+            title: StringManager.GeneralStrings.cancel.rawValue.localized,
+            style: .cancel,
+            handler: nil)
         let confirmAction = UIAlertAction(
-            title: "삭제",
+            title: StringManager.GeneralStrings.delete.rawValue.localized,
             style: .destructive,
             handler: { _ in
                 self.persistenceManager.deleteData(index: self.selectedIndexPath.item)

@@ -6,5 +6,59 @@
   Copyright © 2020 Doyoung Song. All rights reserved.
 */
 
-"Don't miss the moment" = "터치하여 일상기록";
+// HomeView
+"Moment" = "Moment";
+
+"Don't miss the Moment" = "터치하여 일상기록";
+
 "Remember your day" = "소중한 일상을 기록하세요";
+
+"Settings" = "Settings";
+
+"Choose Theme" = "테마 선택";
+
+"Please choose the theme you want. \n The new theme will be applied after app is restarted." = "원하는 테마를 선택하세요. \n 새로운 테마는 다음 앱 실행 시부터 적용됩니다.";
+
+"Do you want to restart the app to apply the new theme?" = "테마 적용을 위해 앱을 재시작하겠습니까?";
+
+"Cancel" = "취소";
+
+"Restart" = "재시작";
+
+"Confirm" = "확인";
+
+
+// AlbumCollectionView
+"Album" = "Album";
+
+
+// DetailView
+"Comment" = "Comment";
+
+"No Comment" = "저장된 코멘트가 없습니다";
+
+"Location" = "Location";
+
+"No Plcae Info" = "저장된 장소 정보가 없습니다";
+
+"Memory" = "Memory";
+
+"Save" = "Save";
+
+
+// EditingView
+"Delete" = "삭제";
+"Delete Image" = "이미지 삭제";
+"Do you really want to delete the image?" = "이미지를 정말 삭제하겠습니까?";
+
+
+// RegisterView
+"Press below button to find location" = "아래 버튼을 눌러 장소를 추가하세요";
+" Check my location" = " 내 위치 찾기";
+
+
+// plist
+"The app needs your authorization to access the camera." = "당신의 소중한 일상을 기록하기 위해 카메라에 접근합니다.";
+"The app needs your authorization to access your location." = "현재 위치 확인을 위한 권한을 요청합니다.";
+"The app needs your authorization to save the picture." = "촬영한 사진을 앨범에 저장하기 위한 권한을 요청합니다.";
+

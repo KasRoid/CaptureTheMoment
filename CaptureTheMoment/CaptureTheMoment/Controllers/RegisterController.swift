@@ -25,16 +25,24 @@ final class RegisterController: UIViewController {
     }()
     var imageFromPicker: UIImage = UIImage()
     lazy var cancelButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelAction(_:)))
+        let button = UIBarButtonItem(
+            title: StringManager.GeneralStrings.cancel.rawValue.localized,
+            style: .plain,
+            target: self,
+            action: #selector(cancelAction(_:)))
         return button
     }()
     lazy var saveButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveAction(_:)))
+        let button = UIBarButtonItem(
+            title: StringManager.GeneralStrings.save.rawValue.localized,
+            style: .plain,
+            target: self,
+            action: #selector(saveAction(_:)))
         return button
     }()
     lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "아래 버튼을 눌러 장소를 추가하세요"
+        label.text = StringManager.RegisterView.locationPlaceholder.rawValue.localized
         label.textAlignment = .center
         label.textColor = colorPalette.textColor
         label.font = .boldSystemFont(ofSize: 16)
@@ -44,8 +52,9 @@ final class RegisterController: UIViewController {
         let button = UIButton()
         let image = UIImage(systemName: "location.circle")?.withTintColor(colorPalette.backgourndColor, renderingMode: .alwaysOriginal)
         button.setImage(image, for: .normal)
-        button.setTitle(" 내 위치 찾기", for: .normal)
+        button.setTitle(StringManager.RegisterView.checkMyLoaction.rawValue.localized, for: .normal)
         button.setTitleColor(colorPalette.backgourndColor, for: .normal)
+        button.titleLabel?.textColor = colorPalette.backgourndColor
         button.backgroundColor = colorPalette.buttonColor
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(locationUpdate(_:)), for: .touchUpInside)
@@ -68,7 +77,7 @@ final class RegisterController: UIViewController {
     }()
     lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Comment..."
+        label.text = StringManager.GeneralStrings.comment.rawValue.localized
         label.textColor = .lightGray
         return label
     }()
@@ -133,8 +142,8 @@ final class RegisterController: UIViewController {
          
          locationButton.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 15),
          locationButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-         locationButton.widthAnchor.constraint(equalToConstant: 170),
-         locationButton.heightAnchor.constraint(equalToConstant: 60),
+         locationButton.widthAnchor.constraint(equalToConstant: 200),
+         locationButton.heightAnchor.constraint(equalToConstant: 50),
          
          indicatorView.centerXAnchor.constraint(equalTo: locationButton.centerXAnchor, constant: 0),
          indicatorView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor, constant: 0)].forEach({$0.isActive = true})
@@ -179,12 +188,12 @@ final class RegisterController: UIViewController {
         locationButton.addSubview(indicatorView)
         
         // navigation
-        navigationItem.title = "Memory"
+        navigationItem.title = StringManager.DetailView.memory.rawValue.localized
         navigationItem.rightBarButtonItem = saveButton
         navigationItem.leftBarButtonItem = cancelButton
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = colorPalette.menuColor
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
@@ -281,7 +290,7 @@ extension RegisterController: CLLocationManagerDelegate {
             self.locationLabel.text = "\(country) \(administrativeArea) \(locality) \(name)"
         }
         // 위치 찾기 버튼 재구성 및 인디케이터 정지
-        locationButton.setTitle("내 위치 찾기", for: .normal)
+        locationButton.setTitle(StringManager.RegisterView.checkMyLoaction.rawValue.localized, for: .normal)
         locationButton.setImage(UIImage(systemName: "location.circle"), for: .normal)
         indicatorView.stopAnimating()
     }

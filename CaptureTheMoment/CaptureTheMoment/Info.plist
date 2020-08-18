@@ -21,11 +21,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>당신의 소중한 일상을 기록하기 위해 카메라에 접근합니다.</string>
+	<string>The app needs your authorization to access the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치 권한 요청합니다.</string>
+	<string>The app needs your authorization to access your location.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>촬영한 사진을 앨범에 저장합니다.</string>
+	<string>The app needs your authorization to save the picture.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
